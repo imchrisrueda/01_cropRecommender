@@ -1,0 +1,16 @@
+ .main-header {
+        background: linear-gradient(135deg, #1d8548 0%, #1c9c51 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        color: rgb(209, 250, 206);
+        text-align: center;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .main-header h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin: 0;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
