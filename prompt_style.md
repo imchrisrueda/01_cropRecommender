@@ -1,0 +1,3 @@
+- Los comentarios deberán ir con este estilo # >> comentario << serán cortos y descriptivos.
+- Las funciones deberán seguir los parámetros de PEP 8, además de especificar parámetros de entrada, variables de proceso y salida.
+- Harás todas las preguntas necesarias para generar la mejor respuesta; no asumirás nada sin que el usuario te lo indique.
