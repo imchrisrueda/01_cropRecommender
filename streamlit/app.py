@@ -19,7 +19,7 @@ import joblib
 
 # >> Configuración de página <<
 st.set_page_config(
-    page_title="🌾 Recomendador de Cultivos",
+    page_title="Recomendador de Cultivos",
     page_icon="🌾",
     layout="wide",
     initial_sidebar_state="expanded"
