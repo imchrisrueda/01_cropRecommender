@@ -237,7 +237,7 @@ Pipeline([
 
 ## 🛠️ Tecnologías Utilizadas
 
-- **Python 3.8+**
+- **Python 3.12.3**
 - **Pandas:** Manipulación de datos
 - **NumPy:** Operaciones numéricas
 - **Scikit-learn:** Machine Learning
