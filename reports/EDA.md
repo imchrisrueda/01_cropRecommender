@@ -37,10 +37,10 @@ La **agricultura de precisión** es fundamental para optimizar el rendimiento ag
 ## 3. Calidad de los Datos
 
 ### 3.1 Valores Faltantes
-✅ **No se detectaron valores nulos** en ninguna columna del dataset.
+**No se detectaron valores nulos** en ninguna columna del dataset.
 
 ### 3.2 Duplicados
-✅ **No se encontraron registros duplicados**.
+**No se encontraron registros duplicados**.
 
 ### 3.3 Conclusión de Calidad
 El dataset presenta una **excelente calidad**, lo que facilita el análisis y reduce la necesidad de imputación o limpieza extensiva.
@@ -66,40 +66,40 @@ rice, maize, chickpea, kidneybeans, pigeonpeas, mothbeans, mungbean, blackgram, 
 
 ### 4.2 Variables Numéricas
 
-#### **Nitrógeno (N)**
-- Rango: 0 - 140
-- Distribución: Relativamente uniforme con picos en valores bajos y medios
-- Relevancia agronómica: Esencial para crecimiento vegetativo
+#### Nitrógeno (N)
+- **Rango:** 0 - 140
+- **Distribución:** Relativamente uniforme con picos en valores bajos y medios
+- **Relevancia agronómica:** Esencial para crecimiento vegetativo
 
-#### **Fósforo (P)**
-- Rango: 5 - 145
-- Distribución: Uniforme en todo el rango
-- Relevancia agronómica: Clave para desarrollo radicular y floración
+#### Fósforo (P)
+- **Rango:** 5 - 145
+- **Distribución:** Uniforme en todo el rango
+- **Relevancia agronómica:** Clave para desarrollo radicular y floración
 
-#### **Potasio (K)**
-- Rango: 5 - 205
-- Distribución: Uniforme
-- Relevancia agronómica: Fundamental para resistencia a enfermedades
+#### Potasio (K)
+- **Rango:** 5 - 205
+- **Distribución:** Uniforme
+- **Relevancia agronómica:** Fundamental para resistencia a enfermedades
 
-#### **Temperatura (°C)**
-- Rango: 8.8 - 43.7 °C
-- Distribución: Multimodal (varios picos)
-- Relevancia agronómica: Determina la estación de siembra
+#### Temperatura (°C)
+- **Rango:** 8.8 - 43.7 °C
+- **Distribución:** Multimodal (varios picos)
+- **Relevancia agronómica:** Determina la estación de siembra
 
-#### **Humedad (%)**
-- Rango: 14 - 99%
-- Distribución: Concentración en valores altos (60-100%)
-- Relevancia agronómica: Afecta enfermedades fúngicas y evapotranspiración
+#### Humedad (%)
+- **Rango:** 14 - 99%
+- **Distribución:** Concentración en valores altos (60-100%)
+- **Relevancia agronómica:** Afecta enfermedades fúngicas y evapotranspiración
 
-#### **pH**
-- Rango: 3.5 - 9.9
-- Distribución: Relativamente normal centrada en 6.5
-- Relevancia agronómica: Afecta disponibilidad de nutrientes
+#### pH
+- **Rango:** 3.5 - 9.9
+- **Distribución:** Relativamente normal centrada en 6.5
+- **Relevancia agronómica:** Afecta disponibilidad de nutrientes
 
-#### **Precipitación (mm)**
-- Rango: 20 - 298 mm
-- Distribución: Multimodal (varios picos)
-- Relevancia agronómica: Determina necesidades de riego
+#### Precipitación (mm)
+- **Rango:** 20 - 298 mm
+- **Distribución:** Multimodal (varios picos)
+- **Relevancia agronómica:** Determina necesidades de riego
 
 ---
 
@@ -144,13 +144,13 @@ rice, maize, chickpea, kidneybeans, pigeonpeas, mothbeans, mungbean, blackgram, 
 | Resto | < ±0.15 | No correlacionados |
 
 **Conclusión:**
-- ✅ **No hay multicolinealidad problemática**
-- ✅ Las variables son independientes entre sí
-- ✅ No es necesario eliminar features por redundancia
+- **No hay multicolinealidad problemática**
+- Las variables son independientes entre sí
+- No es necesario eliminar features por redundancia
 
 ### 6.2 Patrones por Cultivo
 
-#### **Análisis de Perfiles (Medianas por Cultivo)**
+#### Análisis de Perfiles (Medianas por Cultivo)
 
 **Cultivos de Alta Precipitación (>200mm):**
 - Rice (arroz)
@@ -206,22 +206,22 @@ N_over_PK = N / (P + K + 1e-6)
 
 ### 8.1 Grupos de Cultivos por Requerimientos
 
-#### **Grupo 1: Cultivos de Climas Húmedos y Cálidos**
+#### Grupo 1: Cultivos de Climas Húmedos y Cálidos
 - **Cultivos:** Rice, Coconut, Papaya, Banana
 - **Características:** Alta humedad (>80%), Alta temperatura (>25°C), Alta precipitación (>150mm)
 - **Región típica:** Zonas tropicales costeras
 
-#### **Grupo 2: Cultivos de Climas Áridos**
+#### Grupo 2: Cultivos de Climas Áridos
 - **Cultivos:** Chickpea, Mothbeans, Lentil
 - **Características:** Baja precipitación (<50mm), Temperatura moderada (20-30°C)
 - **Región típica:** Zonas semiáridas, secano
 
-#### **Grupo 3: Cultivos de Climas Templados**
+#### Grupo 3: Cultivos de Climas Templados
 - **Cultivos:** Apple, Grapes
 - **Características:** Temperatura baja-moderada (<20°C), pH ácido (<6.5)
 - **Región típica:** Zonas de montaña, valles
 
-#### **Grupo 4: Cultivos Industriales de Alto Consumo**
+#### Grupo 4: Cultivos Industriales de Alto Consumo
 - **Cultivos:** Cotton, Jute, Coffee
 - **Características:** Alto N, Alta precipitación (>100mm)
 - **Región típica:** Zonas de agricultura intensiva
@@ -244,7 +244,7 @@ Según análisis visual y perfil de cultivos:
 
 - **Train Set:** 80% (1,760 observaciones)
 - **Test Set:** 20% (440 observaciones)
-- **Estratificación:** ✅ Aplicada (mantiene proporción de clases)
+- **Estratificación:** Aplicada (mantiene proporción de clases)
 
 ### 9.2 Escalado de Features
 
@@ -271,9 +271,9 @@ Según análisis visual y perfil de cultivos:
 **Accuracy (Exactitud):** ~99%
 
 **Interpretación:**
-- ✅ Excelente separabilidad entre cultivos
-- ✅ Las features son altamente informativas
-- ✅ No hay overlap significativo entre clases
+- Excelente separabilidad entre cultivos
+- Las features son altamente informativas
+- No hay overlap significativo entre clases
 
 ### 10.3 Feature Importance
 
@@ -292,23 +292,46 @@ Según análisis visual y perfil de cultivos:
 
 ---
 
-## 11. Conclusiones Finales
+## 11. Análisis de Estacionalidad
 
-### 11.1 Conclusiones Técnicas
+### 11.1 Calendario Agrícola de India (Base del Dataset)
 
-1. ✅ **Dataset de alta calidad:** Sin nulos, sin duplicados, balanceado
-2. ✅ **Features independientes:** No hay multicolinealidad
-3. ✅ **Alta separabilidad:** Los cultivos tienen perfiles bien diferenciados
-4. ✅ **Modelo viable:** Random Forest baseline alcanza ~99% accuracy
+#### Temporadas de Cultivo
 
-### 11.2 Conclusiones del Dominio
+**1. Kharif (Monsoon) - Junio a Octubre**
+- **Precipitación:** Alta (300-1000mm total)
+- **Temperatura:** 25-35°C
+- **Cultivos:** Rice, Maize, Cotton, Jute, Papaya, Banana
+
+**2. Rabi (Invierno) - Noviembre a Marzo**
+- **Precipitación:** Baja (50-200mm total)
+- **Temperatura:** 15-25°C
+- **Cultivos:** Chickpea, Lentil, Kidney Beans
+
+**3. Zaid (Verano) - Marzo a Junio**
+- **Precipitación:** Muy baja, requiere riego
+- **Temperatura:** 30-40°C
+- **Cultivos:** Watermelon, Muskmelon, Mungbean
+
+---
+
+## 12. Conclusiones Finales
+
+### 12.1 Conclusiones Técnicas
+
+1. **Dataset de alta calidad:** Sin nulos, sin duplicados, balanceado
+2. **Features independientes:** No hay multicolinealidad
+3. **Alta separabilidad:** Los cultivos tienen perfiles bien diferenciados
+4. **Modelo viable:** Random Forest baseline alcanza ~99% accuracy
+
+### 12.2 Conclusiones del Dominio
 
 1. **Precipitación como factor crítico:** Es la variable más importante para selección de cultivos
 2. **Grupos climáticos claros:** Los cultivos se agrupan en zonas agroclimáticas específicas
 3. **Balance NPK relevante:** Los requerimientos nutricionales son discriminantes
 4. **Aplicabilidad práctica:** El sistema puede recomendar cultivos con alta confianza
 
-### 11.3 Recomendaciones para Producción
+### 12.3 Recomendaciones para Producción
 
 1. **Sistema de alertas:** Implementar umbrales de confianza para predicciones
 2. **Interfaz intuitiva:** Mostrar top-3 cultivos recomendados con probabilidades
@@ -317,464 +340,108 @@ Según análisis visual y perfil de cultivos:
 
 ---
 
-## 12. Próximos Pasos
+## 13. Recomendaciones Agronómicas por Cultivo
 
-1. ✅ Validación cruzada del modelo
-2. ✅ Comparación con otros algoritmos (XGBoost, SVM)
-3. ✅ Optimización de hiperparámetros
-4. ✅ Desarrollo de API/Dashboard para agricultores
-5. ⏳ Integración con datos meteorológicos en tiempo real
-6. ⏳ Validación con expertos agrónomos
-
----
-
-**Fecha del análisis:** Octubre 2025  
-**Analista:** Sistema de Agricultura de Precisión  
-**Versión del documento:** 1.0
-
----
-
-## 13. Recomendaciones Agronómicas Específicas
-
-### 13.1 Guía de Siembra por Cultivo
-
-#### **Cereales**
+### 13.1 Cereales
 
 **Rice (Arroz)**
 - **Época de siembra:** Monsoon (mayo-julio)
-- **Requerimientos:**
-  - Precipitación: >200mm/mes
-  - Temperatura: 25-35°C
-  - Humedad: >80%
-  - N: Alto (80-100), P: Moderado (40-60), K: Moderado (40-60)
+- **Requerimientos:** Precipitación >200mm/mes, Temperatura 25-35°C, Humedad >80%
+- **N:** Alto (80-100), **P:** Moderado (40-60), **K:** Moderado (40-60)
 - **pH óptimo:** 5.5-7.0
-- **Recomendación:** Campos con inundación estacional, clima tropical
 
 **Maize (Maíz)**
 - **Época de siembra:** Kharif (junio-julio) o Rabi (octubre-noviembre)
-- **Requerimientos:**
-  - Precipitación: 50-100mm/mes
-  - Temperatura: 20-30°C
-  - N: Alto (80-120), P: 40-60, K: 40-60
+- **Requerimientos:** Precipitación 50-100mm/mes, Temperatura 20-30°C
+- **N:** Alto (80-120), **P:** 40-60, **K:** 40-60
 - **pH óptimo:** 5.5-7.5
-- **Recomendación:** Suelos bien drenados, rotación de cultivos
 
-#### **Leguminosas**
+### 13.2 Leguminosas
 
 **Chickpea (Garbanzo)**
 - **Época de siembra:** Rabi (octubre-noviembre)
-- **Requerimientos:**
-  - Precipitación: 40-60mm/mes (secano)
-  - Temperatura: 20-25°C
-  - N: Bajo (20-40) - fija N atmosférico
-  - P: 40-60, K: 40-60
+- **Requerimientos:** Precipitación 40-60mm/mes (secano), Temperatura 20-25°C
+- **N:** Bajo (20-40) - fija N atmosférico
 - **pH óptimo:** 6.0-7.5
-- **Recomendación:** Clima seco, evitar encharcamiento
 
 **Lentil (Lentejas)**
 - **Época de siembra:** Rabi (octubre-noviembre)
-- **Requerimientos:**
-  - Precipitación: 40-60mm/mes
-  - Temperatura: 15-25°C
-  - N: Bajo (20-40)
-  - P: 40-60, K: 40-60
+- **Requerimientos:** Precipitación 40-60mm/mes, Temperatura 15-25°C
+- **N:** Bajo (20-40)
 - **pH óptimo:** 6.0-7.5
-- **Recomendación:** Rotación con cereales, mejora el suelo
 
-#### **Frutales Tropicales**
+### 13.3 Frutales Tropicales
 
 **Banana (Plátano)**
 - **Época de siembra:** Todo el año (clima tropical)
-- **Requerimientos:**
-  - Precipitación: 100-200mm/mes
-  - Temperatura: 25-35°C
-  - Humedad: >75%
-  - N: Alto (100-120), P: 60-80, K: 100-120
+- **Requerimientos:** Precipitación 100-200mm/mes, Temperatura 25-35°C, Humedad >75%
+- **N:** Alto (100-120), **P:** 60-80, **K:** 100-120
 - **pH óptimo:** 6.0-7.5
-- **Recomendación:** Suelos profundos, riego constante
 
 **Mango**
 - **Época de siembra:** Junio-julio (monsoon)
-- **Requerimientos:**
-  - Precipitación: 75-200mm/mes (con temporada seca)
-  - Temperatura: 24-30°C
-  - N: 60-80, P: 40-60, K: 60-80
+- **Requerimientos:** Precipitación 75-200mm/mes, Temperatura 24-30°C
 - **pH óptimo:** 5.5-7.5
-- **Recomendación:** Necesita sequía para floración
 
-#### **Frutales Templados**
+### 13.4 Frutales Templados
 
 **Apple (Manzana)**
 - **Época de siembra:** Diciembre-enero (invierno)
-- **Requerimientos:**
-  - Precipitación: 100-125mm/mes
-  - Temperatura: 15-20°C (necesita frío invernal)
-  - N: 60-80, P: 40-60, K: 60-80
+- **Requerimientos:** Precipitación 100-125mm/mes, Temperatura 15-20°C
 - **pH óptimo:** 5.5-6.5 (ligeramente ácido)
-- **Recomendación:** Zonas de montaña, clima templado
 
 **Grapes (Uvas)**
 - **Época de siembra:** Enero-febrero
-- **Requerimientos:**
-  - Precipitación: 50-75mm/mes (con temporada seca)
-  - Temperatura: 15-25°C
-  - N: 40-60, P: 60-80, K: 80-100
+- **Requerimientos:** Precipitación 50-75mm/mes, Temperatura 15-25°C
 - **pH óptimo:** 5.5-7.0
-- **Recomendación:** Suelos bien drenados, clima mediterráneo
 
-#### **Cultivos Industriales**
+### 13.5 Cultivos Industriales
 
 **Coffee (Café)**
 - **Época de siembra:** Monsoon (mayo-junio)
-- **Requerimientos:**
-  - Precipitación: 150-250mm/mes
-  - Temperatura: 15-25°C
-  - Humedad: 70-85%
-  - N: 80-100, P: 40-60, K: 60-80
+- **Requerimientos:** Precipitación 150-250mm/mes, Temperatura 15-25°C, Humedad 70-85%
 - **pH óptimo:** 4.5-6.0 (ácido)
-- **Recomendación:** Sombra parcial, alturas 600-2000m
 
 **Cotton (Algodón)**
 - **Época de siembra:** Kharif (mayo-junio)
-- **Requerimientos:**
-  - Precipitación: 50-100mm/mes
-  - Temperatura: 25-35°C
-  - N: Alto (100-140), P: 60-80, K: 60-80
+- **Requerimientos:** Precipitación 50-100mm/mes, Temperatura 25-35°C
+- **N:** Alto (100-140)
 - **pH óptimo:** 6.0-7.5
-- **Recomendación:** Suelos aluviales, clima cálido
-
-### 13.2 Manejo de Fertilizantes
-
-#### **Estrategia NPK por Grupo de Cultivos**
-
-**Alto Nitrógeno (N>100):**
-- **Cultivos:** Cotton, Maize
-- **Aplicación:**
-  - 50% al momento de siembra
-  - 25% a los 30 días
-  - 25% a los 60 días
-- **Fuentes:** Urea (46% N), Sulfato de amonio
-
-**Bajo Nitrógeno (N<40):**
-- **Cultivos:** Leguminosas (Chickpea, Lentil)
-- **Justificación:** Fijan N₂ atmosférico vía Rhizobium
-- **Aplicación:** Solo nitrógeno de arranque (20 kg/ha)
-- **Recomendación:** Inocular semillas con rhizobium
-
-**Alto Potasio (K>80):**
-- **Cultivos:** Banana, Grapes, Coconut
-- **Aplicación:** Fraccionar en 3-4 dosis
-- **Fuentes:** Muriato de potasio (KCl 60%)
-- **Beneficio:** Mejora calidad de frutos
-
-**Alto Fósforo (P>60):**
-- **Cultivos:** Grapes, Banana
-- **Aplicación:** Todo al momento de siembra (inmóvil en suelo)
-- **Fuentes:** Superfosfato simple, DAP
-
-### 13.3 Manejo de pH del Suelo
-
-#### **Cultivos Acidófilos (pH 4.5-6.0)**
-
-**Coffee, Grapes, Apple**
-- **Suelos ácidos naturales:** No requieren enmiendas
-- **Suelos alcalinos:** Acidificar con:
-  - Azufre elemental (S⁰): 100-500 kg/ha
-  - Sulfato de aluminio: 200-600 kg/ha
-  - Materia orgánica ácida (turba)
-
-#### **Cultivos Neutros (pH 6.0-7.5)**
-
-**Mayoría de cultivos**
-- **Suelos ácidos:** Encalar con:
-  - Cal dolomítica: 1-3 ton/ha
-  - Cal agrícola (CaCO₃): 2-4 ton/ha
-- **Suelos alcalinos:** Incorporar materia orgánica
-
-#### **Cultivos Tolerantes a Alcalinidad (pH 7.0-8.5)**
-
-**Cotton, Chickpea**
-- Menor sensibilidad a pH alto
-- En suelos muy alcalinos: aplicar yeso agrícola
-
-### 13.4 Gestión del Agua
-
-#### **Cultivos de Alta Demanda Hídrica (>200mm/mes)**
-
-**Rice, Coconut, Papaya**
-- **Sistema de riego:** Inundación (arroz) o goteo (frutales)
-- **Frecuencia:** Riego constante, evitar estrés hídrico
-- **Calidad de agua:** Baja salinidad (<500 ppm)
-
-#### **Cultivos de Secano (<50mm/mes)**
-
-**Chickpea, Mothbeans, Lentil**
-- **Sin riego:** Dependen de lluvia estacional
-- **Conservación de humedad:**
-  - Mulching con residuos
-  - Labranza mínima
-  - Acolchado orgánico
-
-#### **Cultivos de Riego Moderado (50-150mm/mes)**
-
-**Maize, Cotton, Grapes**
-- **Sistema de riego:** Aspersión o goteo
-- **Frecuencia:** Cada 7-10 días según evapotranspiración
-- **Fases críticas:**
-  - Maíz: Floración y llenado de grano
-  - Cotton: Floración y formación de cápsulas
-  - Uvas: Post-floración (evitar en maduración)
-
-### 13.5 Control Integrado de Plagas y Enfermedades
-
-#### **Cultivos de Alta Humedad (>80%)**
-
-**Rice, Coconut, Papaya**
-- **Riesgo:** Enfermedades fúngicas (Blast, Tizón)
-- **Prevención:**
-  - Variedades resistentes
-  - Espaciamiento adecuado (ventilación)
-  - Fungicidas preventivos
-  - Rotación de ingredientes activos
-
-#### **Cultivos de Clima Árido**
-
-**Chickpea, Lentil**
-- **Riesgo:** Plagas de suelo (gusanos cortadores)
-- **Prevención:**
-  - Tratamiento de semilla
-  - Arado profundo pre-siembra
-  - Trampas de feromonas
-
-### 13.6 Rotación de Cultivos Recomendada
-
-#### **Secuencia Leguminosa → Cereal**
-
-**Año 1:** Chickpea/Lentil (fija N en suelo)  
-**Año 2:** Maize/Rice (aprovecha N residual)  
-**Beneficio:** Reduce fertilización nitrogenada en 30-40%
-
-#### **Secuencia Cereal → Cereal**
-
-**Año 1:** Rice  
-**Año 2:** Maize  
-**Precaución:** Requiere fertilización completa ambos años
-
-#### **Monocultivo (No Recomendado)**
-
-**Cotton continuo:** Agota suelo, acumula plagas  
-**Alternativa:** Cotton → Leguminosa → Cotton
 
 ---
 
-## 14. Análisis de Estacionalidad
+## 14. Mejoras Futuras e Investigación
 
-### 14.1 Calendario Agrícola de India (Base del Dataset)
-
-#### **Temporadas de Cultivo**
-
-**1. Kharif (Monsoon) - Junio a Octubre**
-- **Precipitación:** Alta (300-1000mm total)
-- **Temperatura:** 25-35°C
-- **Cultivos:**
-  - **Cereales:** Rice, Maize
-  - **Leguminosas:** Mungbean, Blackgram
-  - **Industriales:** Cotton, Jute
-  - **Frutales:** Papaya, Banana (siembra)
-
-**2. Rabi (Invierno) - Noviembre a Marzo**
-- **Precipitación:** Baja (50-200mm total)
-- **Temperatura:** 15-25°C
-- **Cultivos:**
-  - **Cereales:** Wheat (no en dataset)
-  - **Leguminosas:** Chickpea, Lentil, Kidneybeans
-  - **Oleaginosas:** Mustard (no en dataset)
-
-**3. Zaid (Verano) - Marzo a Junio**
-- **Precipitación:** Muy baja, requiere riego
-- **Temperatura:** 30-40°C
-- **Cultivos:**
-  - **Hortalizas:** Watermelon, Muskmelon
-  - **Leguminosas:** Mungbean
-
-### 14.2 Patrones Estacionales por Cultivo
-
-#### **Cultivos de Monsoon (Kharif)**
-
-| Cultivo | Siembra | Cosecha | Duración | Precipitación Acum. |
-|---------|---------|---------|----------|---------------------|
-| Rice | Mayo-Jul | Oct-Dic | 120-150 días | 800-1200mm |
-| Maize | Jun-Jul | Sep-Oct | 90-120 días | 400-600mm |
-| Cotton | May-Jun | Oct-Ene | 150-180 días | 600-900mm |
-| Jute | Mar-May | Jul-Sep | 120-150 días | 600-800mm |
-
-#### **Cultivos de Invierno (Rabi)**
-
-| Cultivo | Siembra | Cosecha | Duración | Precipitación Acum. |
-|---------|---------|---------|----------|---------------------|
-| Chickpea | Oct-Nov | Feb-Mar | 120-150 días | 200-400mm |
-| Lentil | Oct-Nov | Feb-Mar | 110-130 días | 200-350mm |
-| Kidneybeans | Oct-Nov | Jan-Feb | 90-120 días | 200-400mm |
-
-#### **Cultivos Perennes (Todo el Año)**
-
-| Cultivo | Plantación | Primera Cosecha | Ciclo | Manejo |
-|---------|------------|-----------------|-------|--------|
-| Coffee | May-Jun | 3-4 años después | Perenne | Poda anual |
-| Coconut | Jun-Jul | 5-7 años después | Perenne | Riego en sequía |
-| Banana | Todo el año | 10-12 meses | Semi-perenne | Resiembra cada 2-3 años |
-| Mango | Jun-Jul | 3-5 años después | Perenne | Floración en sequía |
-| Grapes | Ene-Feb | 2-3 años después | Perenne | Poda de invierno |
-| Apple | Dic-Ene | 4-5 años después | Perenne | Requiere frío |
-
-### 14.3 Ventanas de Siembra Óptimas
-
-#### **Basado en Temperatura**
-
-**Cultivos de Clima Fresco (15-25°C):**
-- **Época:** Octubre-Febrero (Rabi)
-- **Cultivos:** Apple, Grapes, Lentil, Chickpea
-- **Riesgo de heladas:** Evitar siembra en zonas con T<5°C
-
-**Cultivos de Clima Cálido (25-35°C):**
-- **Época:** Mayo-Agosto (Kharif)
-- **Cultivos:** Rice, Cotton, Papaya, Coconut
-- **Riesgo de calor:** Evitar siembra en picos de T>40°C
-
-#### **Basado en Precipitación**
-
-**Dependientes de Monsoon (>200mm/mes):**
-- **Ventana:** Mayo-Julio (inicio de lluvias)
-- **Cultivos:** Rice, Coconut, Jute
-- **Precaución:** Retrasar siembra si monsoon se retrasa
-
-**Cultivos de Secano (<50mm/mes):**
-- **Ventana:** Octubre-Noviembre (humedad residual)
-- **Cultivos:** Chickpea, Lentil
-- **Precaución:** Evitar siembra tardía (riesgo de sequía terminal)
-
-### 14.4 Impacto del Cambio Climático
-
-#### **Tendencias Observadas**
-
-**Aumento de Temperatura (+1-2°C en 50 años):**
-- **Impacto:** Reducción de ciclo de cultivos (maduración temprana)
-- **Adaptación:** Variedades tolerantes a calor
-
-**Irregularidad del Monsoon:**
-- **Impacto:** Inicio tardío o lluvias erráticas
-- **Adaptación:** Sistemas de riego complementario
-
-**Eventos Extremos (Sequías/Inundaciones):**
-- **Impacto:** Pérdida de cosechas
-- **Adaptación:** Diversificación de cultivos, seguros agrícolas
-
-#### **Recomendaciones de Adaptación**
-
-**Cultivos Resilientes:**
-- **Sequía:** Millet (no en dataset), Sorghum, Chickpea
-- **Inundación:** Rice (variedades sumergibles)
-- **Calor:** Cotton, Papaya
-
-**Prácticas de Manejo:**
-- Acolchado para conservar humedad
-- Riego por goteo (eficiencia 90% vs 40% inundación)
-- Variedades de ciclo corto (escapan a sequía terminal)
-
-### 14.5 Recomendaciones Estacionales para el Sistema
-
-#### **Integración con el Modelo**
-
-**Feature Adicional Propuesta: `month_of_sowing`**
-- Codificar como variable categórica (1-12)
-- Mejoraría predicciones al capturar estacionalidad
-- Ejemplo: Chickpea → Recomendado solo en Oct-Nov
-
-**Sistema de Alertas:**
-- **Alerta de Temporada:** "Chickpea se recomienda en Rabi (Oct-Nov)"
-- **Alerta de Clima:** "Temperatura actual fuera de rango óptimo"
-- **Alerta de Riesgo:** "Monsoon retrasado, considerar cultivo de Zaid"
-
-**Dashboard Estacional:**
-- Filtro por temporada (Kharif/Rabi/Zaid)
-- Mostrar cultivos óptimos para el mes actual
-- Predicción de inicio de temporada basada en datos meteorológicos
-
----
-
-## 15. Conclusiones Integradas (Técnicas + Agronómicas)
-
-### 15.1 Síntesis del Análisis
-
-**Técnicamente:**
-- Dataset de alta calidad, balanceado, sin valores faltantes
-- 7 features discriminantes con baja correlación
-- Random Forest alcanza 99% accuracy
-- Rainfall es la variable más importante (25%)
-
-**Agronómicamente:**
-- Los cultivos se agrupan en 4 zonas agroclimáticas claras
-- Precipitación determina la ventana de siembra (Kharif vs Rabi)
-- Temperatura separa cultivos tropicales vs templados
-- Balance NPK refleja requerimientos nutricionales reales
-
-### 15.2 Fortalezas del Sistema
-
-1. **Alta precisión predictiva:** 99% accuracy valida que las features capturan el problema
-2. **Interpretabilidad:** Feature importances coinciden con conocimiento agronómico
-3. **Aplicabilidad práctica:** Cubre 22 cultivos de importancia económica
-4. **Robustez:** Maneja condiciones extremas sin eliminar outliers
-
-### 15.3 Limitaciones y Mejoras Futuras
-
-#### **Limitaciones Actuales**
+### 14.1 Limitaciones Actuales
 
 1. **Falta de estacionalidad explícita:** No incluye mes de siembra
-2. **Datos estáticos:** No considera variabilidad temporal (sequías, olas de calor)
-3. **Escala local:** Dataset de India, puede requerir calibración para otras regiones
-4. **Variables omitidas:**
-   - Tipo de suelo (textura, drenaje)
-   - Profundidad de suelo
-   - Salinidad del agua de riego
-   - Altitud
+2. **Datos estáticos:** No considera variabilidad temporal
+3. **Escala local:** Dataset de India, requiere calibración para otras regiones
+4. **Variables omitidas:** Tipo de suelo, profundidad, salinidad, altitud
 
-#### **Mejoras Propuestas**
+### 14.2 Mejoras Propuestas
 
-**Corto Plazo (3-6 meses):**
-1. Incorporar `month` como feature categórica
-2. Validar con expertos agrónomos locales
-3. Recopilar datos de campo para reentrenamiento
-4. Desarrollar sistema de alertas estacionales
+**Corto Plazo:**
+- Incorporar `month` como feature categórica
+- Validar con expertos agrónomos locales
+- Recopilar datos de campo para reentrenamiento
+- Desarrollar sistema de alertas estacionales
 
-**Mediano Plazo (6-12 meses):**
-1. Integración con APIs meteorológicas (pronóstico 7-15 días)
-2. Módulo de rotación de cultivos
-3. Calculadora de requerimientos de fertilizantes
-4. Análisis de rentabilidad económica
+**Mediano Plazo:**
+- Integración con APIs meteorológicas
+- Módulo de rotación de cultivos
+- Calculadora de requerimientos de fertilizantes
+- Análisis de rentabilidad económica
 
-**Largo Plazo (>12 meses):**
-1. Imágenes satelitales (NDVI, humedad del suelo)
-2. IoT sensors en campo (sensores de pH, humedad, NPK en tiempo real)
-3. Gemelos digitales (simulación de rendimientos)
-4. Blockchain para trazabilidad de recomendaciones
-
-### 15.4 Impacto Esperado
-
-**Para Agricultores:**
-- Reducción de riesgo de pérdida de cosechas (30-40%)
-- Optimización de uso de fertilizantes (ahorro 20-30%)
-- Aumento de rendimientos (10-25%)
-- Acceso a conocimiento técnico sin costo
-
-**Para el Sector:**
-- Promoción de agricultura de precisión
-- Reducción de impacto ambiental (menos fertilizantes)
-- Seguridad alimentaria (mejor planificación de siembras)
-- Datos para políticas públicas
+**Largo Plazo:**
+- Imágenes satelitales (NDVI, humedad del suelo)
+- IoT sensors en campo
+- Gemelos digitales (simulación de rendimientos)
+- Blockchain para trazabilidad
 
 ---
 
-**Fecha del análisis:** Octubre 2025  
-**Analista:** Sistema de Agricultura de Precisión  
-**Versión del documento:** 2.0 (con Recomendaciones Agronómicas y Estacionalidad)
+**Fecha del análisis:** Febrero 2026  
+**Versión del documento:** 2.0 Professional  
+**Analista:** Christian Rueda-Ayala
 

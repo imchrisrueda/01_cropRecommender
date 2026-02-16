@@ -1,10 +1,10 @@
 """
 Sistema de Recomendación de Cultivos - Agricultura de Precisión.
 
-Aplicación Streamlit con diseño mejorado, secciones claras y visualización atractiva.
+Aplicación Streamlit con diseño profesional y visualizaciones interactivas avanzadas.
+Author: Christian Rueda-Ayala
 """
 
-# >> Imports <<
 import os
 import sys
 import streamlit as st
@@ -19,172 +19,202 @@ import joblib
 
 # >> Configuración de página <<
 st.set_page_config(
-    page_title="Recomendador de Cultivos",
+    page_title="Crop Recommendation System",
     page_icon="🌾",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# >> CSS Personalizado <<
+# >> CSS Profesional <<
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
     html, body, [class*="css"] {
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
     
     .main-header {
-        background: linear-gradient(135deg, #2ecc71 10%, #27ae60 100%);
-        padding: 2rem;
-        border-radius: 15px;
-        color: rgb(209, 250, 206);
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        padding: 2.5rem;
+        border-radius: 10px;
+        color: white;
         text-align: center;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     }
     
     .main-header h1 {
-        font-size: 3rem;
+        font-size: 2.5rem;
         font-weight: 700;
         margin: 0;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        letter-spacing: -0.5px;
     }
     
     .main-header p {
-        font-size: 1.2rem;
-        margin-top: 0.5rem;
-        opacity: 0.95;
-    }
-    
-    .metric-card {
-        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-        padding: 1.5rem;
-        border-radius: 12px;
-        border-left: 5px solid #2ecc71;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        margin-bottom: 1rem;
-        transition: transform 0.2s;
-    }
-    
-    .metric-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    }
-    
-    .metric-value {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #2ecc71;
-        margin: 0;
-    }
-    
-    .metric-label {
-        font-size: 1rem;
-        color: #7f8c8d;
-        margin-top: 0.5rem;
+        font-size: 1.1rem;
+        margin-top: 0.75rem;
+        opacity: 0.9;
         font-weight: 400;
     }
     
+    .metric-card {
+        background: white;
+        padding: 1.75rem;
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .metric-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border-color: #3b82f6;
+    }
+    
+    .metric-value {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin: 0;
+        line-height: 1;
+    }
+    
+    .metric-label {
+        font-size: 0.95rem;
+        color: #6b7280;
+        margin-top: 0.5rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
     .section-divider {
-        border-top: 3px solid #27ae60;
-        margin: 2rem 0;
-        opacity: 0.3;
+        border-top: 1px solid #e5e7eb;
+        margin: 2.5rem 0;
     }
     
     .section-header {
-        background: linear-gradient(90deg, #ecf0f1 0%, #f8f9fa 100%);
-        padding: 1rem 1.5rem;
-        border-radius: 10px;
-        border-left: 5px solid #3498db;
-        margin: 1.5rem 0;
+        background: linear-gradient(90deg, #f8fafc 0%, #ffffff 100%);
+        padding: 1.25rem 1.5rem;
+        border-radius: 8px;
+        border-left: 4px solid #3b82f6;
+        margin: 2rem 0 1.5rem 0;
     }
     
     .section-header h2 {
-        color: #2c3e50;
+        color: #1e293b;
         margin: 0;
         font-weight: 600;
+        font-size: 1.5rem;
     }
     
     .info-box {
-        background: #d4edda;
-        border: 1px solid #c3e6cb;
-        border-radius: 10px;
-        padding: 1rem;
+        background: #f0f9ff;
+        border: 1px solid #bfdbfe;
+        border-radius: 8px;
+        padding: 1.25rem;
         margin: 1rem 0;
+        color: #1e40af;
     }
     
-    .info-box-blue {
-        background: #d1ecf1;
-        border: 1px solid #bee5eb;
+    .info-box-success {
+        background: #f0fdf4;
+        border-color: #bbf7d0;
+        color: #166534;
     }
     
-    .info-box-yellow {
-        background: #fff3cd;
-        border: 1px solid #ffeeba;
+    .info-box-warning {
+        background: #fffbeb;
+        border-color: #fde68a;
+        color: #92400e;
     }
     
     .stButton>button {
-        background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         color: white;
         border: none;
         border-radius: 8px;
         padding: 0.75rem 2rem;
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 600;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
         transition: all 0.3s;
+        width: 100%;
     }
     
     .stButton>button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3);
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
     }
     
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
+        gap: 4px;
+        background-color: #f8fafc;
+        padding: 0.5rem;
+        border-radius: 8px;
     }
     
     .stTabs [data-baseweb="tab"] {
-        background-color: #f8f9fa;
-        border-radius: 8px 8px 0 0;
-        padding: 12px 24px;
-        font-weight: 600;
+        background-color: transparent;
+        border-radius: 6px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        color: #64748b;
     }
     
     .stTabs [aria-selected="true"] {
-        background-color: #2ecc71;
-        color: white;
+        background-color: white;
+        color: #1e40af;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .sidebar .sidebar-content {
+        background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
     }
 </style>
 """, unsafe_allow_html=True)
 
 # >> Configuración de paths <<
-DATA_PATH = os.path.join('data', 'Crop_recommendation.csv')
-MODEL_PATH = os.path.join('models', 'crop_recommender_rf.joblib')
-ENCODER_PATH = os.path.join('models', 'label_encoder.joblib')
+DATA_PATH = os.path.join('..', 'data', 'Crop_recommendation.csv')
+MODEL_PATH = os.path.join('..', 'models', 'crop_recommender_rf.joblib')
+ENCODER_PATH = os.path.join('..', 'models', 'label_encoder.joblib')
 
-# >> Iconos de cultivos <<
-CROP_ICONS = {
-    'rice': '🍚', 'maize': '🌽', 'chickpea': '𓇛', 'kidneybeans': '🫘',
-    'pigeonpeas': '🫘', 'mothbeans': '🫛', 'mungbean': '🫘', 'blackgram': '🫘',
-    'lentil': '𓇢', 'pomegranate': '🥭', 'banana': '🍌', 'mango': '🥭',
-    'grapes': '🍇', 'watermelon': '🍉', 'muskmelon': '🍈', 'apple': '🍎',
-    'orange': '🍊', 'papaya': '🏉', 'coconut': '🥥', 'cotton': '☁️',
-    'jute': '🌿', 'coffee': '☕'
+# >> Mapeo de cultivos limpio <<
+CROP_NAMES = {
+    'rice': 'Rice', 'maize': 'Maize', 'chickpea': 'Chickpea', 'kidneybeans': 'Kidney Beans',
+    'pigeonpeas': 'Pigeon Peas', 'mothbeans': 'Moth Beans', 'mungbean': 'Mung Bean', 
+    'blackgram': 'Black Gram', 'lentil': 'Lentil', 'pomegranate': 'Pomegranate', 
+    'banana': 'Banana', 'mango': 'Mango', 'grapes': 'Grapes', 'watermelon': 'Watermelon', 
+    'muskmelon': 'Muskmelon', 'apple': 'Apple', 'orange': 'Orange', 'papaya': 'Papaya', 
+    'coconut': 'Coconut', 'cotton': 'Cotton', 'jute': 'Jute', 'coffee': 'Coffee'
 }
 
 @st.cache_data
 def load_data():
-    return pd.read_csv(DATA_PATH)
+    """Cargar dataset de cultivos"""
+    try:
+        return pd.read_csv(DATA_PATH)
+    except:
+        return pd.read_csv('data/Crop_recommendation.csv')
 
 @st.cache_resource
 def load_model():
-    pipeline = joblib.load(MODEL_PATH)
-    le = joblib.load(ENCODER_PATH)
-    return pipeline, le
+    """Cargar modelo entrenado y encoder"""
+    try:
+        pipeline = joblib.load(MODEL_PATH)
+        le = joblib.load(ENCODER_PATH)
+        return pipeline, le
+    except:
+        pipeline = joblib.load('models/crop_recommender_rf.joblib')
+        le = joblib.load('models/label_encoder.joblib')
+        return pipeline, le
 
 def predict_crop(N, P, K, temperature, humidity, ph, rainfall, pipeline, le):
+    """Realizar predicción de cultivo óptimo"""
     N_over_PK = N / (P + K + 1e-6)
     features = np.array([[N, P, K, temperature, humidity, ph, rainfall, N_over_PK]])
     pred_encoded = pipeline.predict(features)
@@ -194,284 +224,364 @@ def predict_crop(N, P, K, temperature, humidity, ph, rainfall, pipeline, le):
     top_crops = {le.inverse_transform([idx])[0]: pred_proba[idx] for idx in top_indices}
     return crop, top_crops
 
+def create_distribution_plot(df, column, title):
+    """Crear gráfico de distribución interactivo"""
+    fig = make_subplots(
+        rows=1, cols=2,
+        subplot_titles=('Distribution', 'Box Plot'),
+        column_widths=[0.7, 0.3]
+    )
+    
+    fig.add_trace(
+        go.Histogram(x=df[column], nbinsx=40, name='Frequency', 
+                    marker_color='#3b82f6', opacity=0.7),
+        row=1, col=1
+    )
+    
+    fig.add_trace(
+        go.Box(y=df[column], name='Statistics', marker_color='#3b82f6',
+               boxmean='sd'),
+        row=1, col=2
+    )
+    
+    fig.update_layout(
+        title_text=title,
+        showlegend=False,
+        height=400,
+        template='plotly_white',
+        font=dict(family='Inter, sans-serif')
+    )
+    
+    return fig
+
+def create_correlation_heatmap(df):
+    """Crear mapa de calor de correlaciones mejorado"""
+    num_cols = ['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall']
+    corr = df[num_cols].corr()
+    
+    fig = go.Figure(data=go.Heatmap(
+        z=corr.values,
+        x=corr.columns,
+        y=corr.columns,
+        colorscale='RdBu_r',
+        zmid=0,
+        text=np.round(corr.values, 2),
+        texttemplate='%{text}',
+        textfont={"size": 11},
+        colorbar=dict(title="Correlation")
+    ))
+    
+    fig.update_layout(
+        title='Feature Correlation Matrix',
+        xaxis_title='',
+        yaxis_title='',
+        height=500,
+        template='plotly_white',
+        font=dict(family='Inter, sans-serif')
+    )
+    
+    return fig
+
+def create_feature_importance_plot():
+    """Crear gráfico de importancia de features"""
+    features = ['Rainfall', 'Nitrogen (N)', 'Potassium (K)', 'Phosphorus (P)', 
+                'Humidity', 'Temperature', 'pH', 'N_over_PK']
+    importance = [0.245, 0.182, 0.156, 0.138, 0.121, 0.089, 0.052, 0.017]
+    
+    colors = ['#1e3a8a' if i == max(importance) else '#3b82f6' for i in importance]
+    
+    fig = go.Figure(go.Bar(
+        x=importance,
+        y=features,
+        orientation='h',
+        marker=dict(color=colors),
+        text=[f'{v:.1%}' for v in importance],
+        textposition='outside',
+        hovertemplate='<b>%{y}</b><br>Importance: %{x:.1%}<extra></extra>'
+    ))
+    
+    fig.update_layout(
+        title='Feature Importance Analysis',
+        xaxis_title='Importance Score',
+        yaxis_title='',
+        height=450,
+        template='plotly_white',
+        font=dict(family='Inter, sans-serif'),
+        xaxis=dict(tickformat='.0%')
+    )
+    
+    return fig
+
 # >> SIDEBAR <<
 with st.sidebar:
-    st.title("🌾 Recomendación de Cultivos")
-    st.markdown("---")
-    page = st.radio("Navegación", ["🏠 Inicio", "📊 EDA", "🤖 Modelo", "🔮 Predicción"], label_visibility="collapsed")
-    st.markdown("---")
     st.markdown("""
-    <div style='padding: 1rem; background: #e8f5e9; border-radius: 10px;'>
-        <h4 style='color: #2e7d32; margin-top: 0;'>💡 Sistema de IA</h4>
-        <p style='font-size: 0.85rem; color: #558b2f;'>
-        Agricultura de precisión que utiliza Machine Learning para recomendar 
-        el cultivo óptimo según características del suelo y clima.
+    <div style='text-align: center; padding: 1.5rem 0.5rem; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border-radius: 10px; margin-bottom: 1.5rem;'>
+        <h2 style='color: white; margin: 0; font-size: 1.5rem;'>Crop Recommender</h2>
+        <p style='color: rgba(255,255,255,0.9); margin-top: 0.5rem; font-size: 0.9rem;'>Precision Agriculture System</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    page = st.radio(
+        "Navigation",
+        ["Home", "Data Analysis", "Model", "Prediction"],
+        label_visibility="collapsed"
+    )
+    
+    st.markdown("---")
+    
+    st.markdown("""
+    <div style='padding: 1rem; background: #f0f9ff; border-radius: 8px; border-left: 4px solid #3b82f6;'>
+        <h4 style='color: #1e40af; margin-top: 0; font-size: 0.95rem;'>About This System</h4>
+        <p style='font-size: 0.85rem; color: #1e40af; line-height: 1.5;'>
+        Machine Learning system that analyzes soil composition and climatic conditions 
+        to recommend the optimal crop for maximum agricultural productivity.
         </p>
     </div>
     """, unsafe_allow_html=True)
-    st.markdown("### 📈 Métricas")
+    
+    st.markdown("### Key Metrics")
     col1, col2 = st.columns(2)
     with col1:
-        st.metric("Cultivos", "22")
+        st.metric("Crops", "22")
         st.metric("Accuracy", "99%")
     with col2:
-        st.metric("Muestras", "2,200")
+        st.metric("Samples", "2,200")
         st.metric("Features", "7")
 
-# >> PÁGINA: INICIO <<
-if page == "🏠 Inicio":
+# >> PÁGINA: HOME <<
+if page == "Home":
     st.markdown("""
     <div class="main-header">
-        <h1>🌾 Sistema de Recomendación de Cultivos</h1>
-        <p>Agricultura de Precisión - Upgrade Bootcamp</p>
+        <h1>Crop Recommendation System</h1>
+        <p>Precision Agriculture powered by Machine Learning</p>
     </div>
     """, unsafe_allow_html=True)
     
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.markdown('<div class="metric-card"><p class="metric-value">22</p><p class="metric-label">Cultivos Analizados</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="metric-card"><p class="metric-value">22</p><p class="metric-label">Crop Types</p></div>', unsafe_allow_html=True)
     with col2:
-        st.markdown('<div class="metric-card"><p class="metric-value">99%</p><p class="metric-label">Accuracy del Modelo</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="metric-card"><p class="metric-value">99%</p><p class="metric-label">Model Accuracy</p></div>', unsafe_allow_html=True)
     with col3:
-        st.markdown('<div class="metric-card"><p class="metric-value">2,200</p><p class="metric-label">Observaciones</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="metric-card"><p class="metric-value">2,200</p><p class="metric-label">Data Samples</p></div>', unsafe_allow_html=True)
     with col4:
-        st.markdown('<div class="metric-card"><p class="metric-value">7</p><p class="metric-label">Variables Predictivas</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="metric-card"><p class="metric-value">7</p><p class="metric-label">Predictive Features</p></div>', unsafe_allow_html=True)
     
     st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
     
     col1, col2 = st.columns([1, 1])
     with col1:
-        st.markdown('<div class="section-header"><h2>🎯 ¿Qué Hace Este Sistema?</h2></div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header"><h2>System Overview</h2></div>', unsafe_allow_html=True)
         st.markdown("""
-        Este sistema utiliza **Machine Learning avanzado** para analizar las características de tu terreno.
+        This system leverages **advanced Machine Learning algorithms** to analyze agricultural data 
+        and provide evidence-based crop recommendations.
         
-        **Analiza:**
-        - 🌱 **Composición del Suelo**: N, P, K, pH
-        - 🌡️ **Condiciones Climáticas**: Temperatura, Humedad, Precipitación
-        - 📊 **Patrones Históricos**: +2,000 siembras exitosas
+        **Analysis Factors:**
+        - **Soil Composition**: Nitrogen (N), Phosphorus (P), Potassium (K), pH levels
+        - **Climate Conditions**: Temperature, Humidity, Rainfall patterns
+        - **Historical Data**: Over 2,000 successful cultivation records
         
-        **Te Ofrece:**
-        - ✅ Recomendación óptima con 99% de precisión
-        - 📈 Probabilidades para múltiples cultivos
-        - 💡 Información agronómica especializada
+        **System Capabilities:**
+        - 99% prediction accuracy on test data
+        - Probability scores for multiple crop alternatives
+        - Specialized agronomic insights
+        - Real-time interactive visualization
         """)
     
     with col2:
-        st.markdown('<div class="section-header"><h2>🚀 Cómo Funciona</h2></div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header"><h2>How It Works</h2></div>', unsafe_allow_html=True)
         st.markdown("""
-        1. **📝 Ingresa los Datos**
-           - Características de suelo y clima
-           - Controles deslizantes intuitivos
+        **Step 1: Data Input**
+        - Enter soil and climate characteristics
+        - Intuitive slider-based interface
+        - Real-time validation
         
-        2. **🤖 Análisis con IA**
-           - Random Forest con 200 árboles
-           - Comparación con 2,200 casos históricos
+        **Step 2: AI Analysis**
+        - Random Forest algorithm with 200 decision trees
+        - Comparison against 2,200 historical cases
+        - Feature importance weighting
         
-        3. **🎯 Recibe Recomendación**
-           - Cultivo óptimo con confianza
-           - Top-5 alternativas
+        **Step 3: Recommendation**
+        - Optimal crop with confidence score
+        - Top 5 alternative crops
+        - Detailed probability distribution
         
-        4. **📚 Consulta la Guía**
-           - Épocas de siembra
-           - Manejo de fertilizantes
+        **Step 4: Decision Support**
+        - Agronomic context and insights
+        - Best practices guidance
+        - Seasonal considerations
         """)
     
     df = load_data()
     crops = sorted(df['label'].unique())
     st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
-    st.markdown('<div class="section-header"><h2>🌾 Cultivos Disponibles</h2></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-header"><h2>Supported Crops</h2></div>', unsafe_allow_html=True)
     
-    col1, col2, col3, col4 = st.columns(4)
-    for i, crop in enumerate(crops):
-        icon = CROP_ICONS.get(crop, '🌱')
-        if i % 4 == 0:
-            col1.markdown(f"{icon} {crop.capitalize()}")
-        elif i % 4 == 1:
-            col2.markdown(f"{icon} {crop.capitalize()}")
-        elif i % 4 == 2:
-            col3.markdown(f"{icon} {crop.capitalize()}")
-        else:
-            col4.markdown(f"{icon} {crop.capitalize()}")
+    st.markdown(f"""
+    <div style='background: #f8fafc; padding: 1.5rem; border-radius: 8px; border: 1px solid #e5e7eb;'>
+        <p style='margin: 0; color: #475569; line-height: 2;'>
+            {' • '.join([CROP_NAMES.get(c, c.capitalize()) for c in crops])}
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
-# >> PÁGINA: EDA <<
-elif page == "📊 EDA":
-    st.markdown('<div class="main-header"><h1>📊 Análisis Exploratorio de Datos</h1><p>Visualización Interactiva del Dataset</p></div>', unsafe_allow_html=True)
+# >> PÁGINA: DATA ANALYSIS <<
+elif page == "Data Analysis":
+    st.markdown('<div class="main-header"><h1>Exploratory Data Analysis</h1><p>Interactive Dataset Visualization</p></div>', unsafe_allow_html=True)
     
     df = load_data()
     
-    # >> Contexto del EDA <<
-    st.info("🎯 **Objetivo del Análisis:** Este EDA identifica patrones y relaciones entre las características del suelo, condiciones climáticas y cultivos óptimos para desarrollar un sistema de recomendación basado en agricultura de precisión.")
+    st.markdown("""
+    <div class="info-box">
+    <strong>Analysis Objective:</strong> This EDA identifies patterns and relationships between soil characteristics, 
+    climatic conditions, and optimal crops for precision agriculture decision-making.
+    </div>
+    """, unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("""
-        **📊 Origen de Datos**
-        - Fuente: Datos de agricultura de India
-        - Contexto: Rainfall, climate, fertilizer
-        - Tipo: Datos aumentados y balanceados
+        **Data Source**
+        - Origin: Indian agricultural data
+        - Context: Rainfall, climate, fertilizer
+        - Type: Augmented and balanced
         """)
     with col2:
         st.markdown("""
-        **🔬 Calidad de Datos**
-        - ✅ Sin valores nulos
-        - ✅ Sin duplicados
-        - ✅ Balance perfecto de clases
+        **Data Quality**
+        - No missing values
+        - No duplicate records
+        - Perfect class balance
         """)
     with col3:
         st.markdown("""
-        **🌾 Variables Clave**
-        - 🌱 Nutrientes: N, P, K, pH
-        - 🌡️ Clima: Temp, Humedad, Lluvia
-        - 🎯 Target: 22 cultivos
+        **Key Variables**
+        - Nutrients: N, P, K, pH
+        - Climate: Temp, Humidity, Rainfall
+        - Target: 22 crop classes
         """)
     
     st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
     
-    tab1, tab2, tab3, tab4 = st.tabs(["📋 Dataset", "📈 Distribuciones", "🔗 Correlaciones", "💡 Insights"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Dataset Overview", "Distributions", "Correlations", "Insights"])
     
     with tab1:
-        st.markdown('<div class="section-header"><h2>Vista General del Dataset</h2></div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header"><h2>Dataset Overview</h2></div>', unsafe_allow_html=True)
         
         col1, col2 = st.columns([2, 1])
         with col1:
-            st.markdown("##### 🔍 Primeras 15 observaciones")
+            st.markdown("##### Sample Data")
             st.dataframe(df.head(15), use_container_width=True, height=400)
         with col2:
-            st.markdown("##### 📊 Métricas de Calidad")
-            st.metric("Total Filas", f"{df.shape[0]:,}")
-            st.metric("Columnas", df.shape[1])
-            st.metric("Valores Nulos", df.isna().sum().sum())
-            st.metric("Cultivos Únicos", df['label'].nunique())
-            st.success("✅ Dataset balanceado: 100 muestras/cultivo")
-            st.info("🎯 Ideal para ML: No requiere balanceo")
+            st.markdown("##### Quality Metrics")
+            st.metric("Total Rows", f"{df.shape[0]:,}")
+            st.metric("Columns", df.shape[1])
+            st.metric("Missing Values", df.isna().sum().sum())
+            st.metric("Unique Crops", df['label'].nunique())
+            st.markdown("""
+            <div class="info-box-success">
+            <strong>Perfect Balance:</strong> 100 samples per crop class, optimal for ML training without bias.
+            </div>
+            """, unsafe_allow_html=True)
         
-        st.markdown("##### 📈 Estadísticas Descriptivas")
-        st.dataframe(df.describe().T.style.background_gradient(cmap='Greens'), use_container_width=True)
-        
-        st.success("""
-        **🔍 Interpretación de Rangos:**
-        - **Nitrógeno (N):** 0-140 - Amplio rango refleja diversidad de cultivos
-        - **Fósforo (P):** 5-145 - Crucial para desarrollo radicular
-        - **Potasio (K):** 5-205 - Mayor variabilidad, resistencia a estrés
-        - **Temperatura:** 8.8-43.7°C - Cubre climas templados a tropicales
-        - **Humedad:** 14-99% - Diferencia cultivos de secano vs riego
-        - **pH:** 3.5-9.9 - Desde ácido (café) hasta alcalino (algodón)
-        - **Precipitación:** 20-298mm - Factor más discriminante
-        """)
+        st.markdown("##### Descriptive Statistics")
+        st.dataframe(df.describe().T.style.background_gradient(cmap='Blues', subset=['mean', '50%']), use_container_width=True)
     
     with tab2:
-        st.markdown('<div class="section-header"><h2>Distribuciones de Variables</h2></div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header"><h2>Variable Distributions</h2></div>', unsafe_allow_html=True)
         
-        st.markdown("##### 🌾 Balance de Clases (Target)")
+        st.markdown("##### Crop Distribution (Target Variable)")
         crop_counts = df['label'].value_counts()
-        fig = go.Figure(data=[go.Bar(x=crop_counts.index, y=crop_counts.values, marker=dict(color=crop_counts.values, colorscale='Greens', showscale=True), text=crop_counts.values, textposition='auto')])
-        fig.update_layout(title='Distribución de Cultivos - Balance Perfecto', xaxis_title='Cultivo', yaxis_title='Cantidad de Muestras', height=500, template='plotly_white')
+        fig = go.Figure(data=[go.Bar(
+            x=[CROP_NAMES.get(c, c.capitalize()) for c in crop_counts.index], 
+            y=crop_counts.values,
+            marker=dict(
+                color=crop_counts.values,
+                colorscale=[[0, '#bfdbfe'], [1, '#1e3a8a']],
+                showscale=False
+            ),
+            text=crop_counts.values,
+            textposition='outside',
+            hovertemplate='<b>%{x}</b><br>Samples: %{y}<extra></extra>'
+        )])
+        fig.update_layout(
+            title='Crop Distribution - Perfect Balance',
+            xaxis_title='Crop Type',
+            yaxis_title='Number of Samples',
+            height=500,
+            template='plotly_white',
+            font=dict(family='Inter, sans-serif'),
+            xaxis={'categoryorder': 'total descending'}
+        )
         st.plotly_chart(fig, use_container_width=True)
         
-        st.info("**✅ Balance Perfecto:** Cada uno de los 22 cultivos tiene exactamente 100 observaciones. Esto elimina el sesgo de clases y garantiza métricas de evaluación confiables.")
+        st.markdown("""
+        <div class="info-box-success">
+        <strong>Perfect Balance:</strong> Each of the 22 crops has exactly 100 observations, eliminating class bias 
+        and ensuring reliable evaluation metrics.
+        </div>
+        """, unsafe_allow_html=True)
         
         st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
-        st.markdown("##### 📊 Análisis de Variables Numéricas")
+        st.markdown("##### Numerical Variables Analysis")
         
         num_cols = ['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall']
-        var_descriptions = {
-            'N': 'Nitrógeno - Esencial para crecimiento vegetativo y desarrollo de hojas',
-            'P': 'Fósforo - Fundamental para desarrollo radicular y floración',
-            'K': 'Potasio - Resistencia a enfermedades y calidad del fruto',
-            'temperature': 'Temperatura - Determina la estación de siembra y zona agroclimática',
-            'humidity': 'Humedad - Afecta enfermedades fúngicas y evapotranspiración',
-            'ph': 'pH del Suelo - Disponibilidad de nutrientes y cultivos específicos',
-            'rainfall': 'Precipitación - Factor más discriminante, define necesidades de riego'
+        var_info = {
+            'N': ('Nitrogen', 'Essential for vegetative growth and leaf development'),
+            'P': ('Phosphorus', 'Fundamental for root development and flowering'),
+            'K': ('Potassium', 'Disease resistance and fruit quality'),
+            'temperature': ('Temperature', 'Determines growing season and agroclimatic zone'),
+            'humidity': ('Humidity', 'Affects fungal diseases and evapotranspiration'),
+            'ph': ('pH Level', 'Nutrient availability and crop-specific requirements'),
+            'rainfall': ('Rainfall', 'Most discriminating factor, defines irrigation needs')
         }
         
-        selected_var = st.selectbox("Selecciona Variable:", num_cols, format_func=lambda x: f"{x.upper()}" if len(x) <= 2 else x.capitalize())
-        st.info(f"**Relevancia Agronómica:** {var_descriptions[selected_var]}")
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            st.markdown("**Histograma con Boxplot**")
-            fig = px.histogram(df, x=selected_var, nbins=40, marginal='box', color_discrete_sequence=['#2ecc71'])
-            fig.update_layout(title=f'Distribución de {selected_var.capitalize()}', height=400)
-            st.plotly_chart(fig, use_container_width=True)
-        with col2:
-            st.markdown("**Violin Plot**")
-            fig = px.violin(df, y=selected_var, box=True, color_discrete_sequence=['#3498db'])
-            fig.update_layout(title=f'Densidad de {selected_var.capitalize()}', height=400)
-            st.plotly_chart(fig, use_container_width=True)
-        
-        # >> Estadísticas de la variable seleccionada <<
-        col1, col2, col3, col4 = st.columns(4)
-        with col1:
-            st.metric("Mínimo", f"{df[selected_var].min():.2f}")
-        with col2:
-            st.metric("Media", f"{df[selected_var].mean():.2f}")
-        with col3:
-            st.metric("Mediana", f"{df[selected_var].median():.2f}")
-        with col4:
-            st.metric("Máximo", f"{df[selected_var].max():.2f}")
-        
-        st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
-        st.markdown("##### 🌾 Comparación de Perfiles de Cultivos")
-        
-        # >> Comparación de perfiles de cultivos <<
-        selected_crops = st.multiselect(
-            "Selecciona hasta 5 cultivos para comparar:",
-            sorted(df['label'].unique()),
-            default=sorted(df['label'].unique())[:3],
-            max_selections=5,
-            format_func=lambda x: f"{CROP_ICONS.get(x, '🌱')} {x.capitalize()}"
+        selected_var = st.selectbox(
+            "Select Variable to Analyze:",
+            num_cols,
+            format_func=lambda x: f"{var_info[x][0]} ({x.upper() if len(x) <= 2 else x})"
         )
         
-        if selected_crops:
-            comparison_data = []
-            for crop in selected_crops:
-                crop_data = df[df['label'] == crop][num_cols].median()
-                comparison_data.append(crop_data)
-            
-            comparison_df = pd.DataFrame(comparison_data, index=[f"{CROP_ICONS.get(c, '🌱')} {c.capitalize()}" for c in selected_crops])
-            
-            fig = go.Figure()
-            for i, crop in enumerate(selected_crops):
-                crop_label = f"{CROP_ICONS.get(crop, '🌱')} {crop.capitalize()}"
-                fig.add_trace(go.Scatterpolar(
-                    r=[(comparison_df.loc[crop_label, col] - df[col].min()) / (df[col].max() - df[col].min()) for col in num_cols],
-                    theta=num_cols,
-                    fill='toself',
-                    name=crop_label
-                ))
-            
-            fig.update_layout(
-                polar=dict(radialaxis=dict(range=[0, 1], showticklabels=True)),
-                title='Comparación de Perfiles de Cultivos (Normalizado)',
-                height=500
-            )
-            st.plotly_chart(fig, use_container_width=True)
+        st.markdown(f"""
+        <div class="info-box">
+        <strong>Agronomic Relevance:</strong> {var_info[selected_var][1]}
+        </div>
+        """, unsafe_allow_html=True)
+        
+        fig = create_distribution_plot(df, selected_var, f'{var_info[selected_var][0]} Distribution')
+        st.plotly_chart(fig, use_container_width=True)
+        
+        col1, col2, col3, col4, col5 = st.columns(5)
+        with col1:
+            st.metric("Min", f"{df[selected_var].min():.2f}")
+        with col2:
+            st.metric("Mean", f"{df[selected_var].mean():.2f}")
+        with col3:
+            st.metric("Median", f"{df[selected_var].median():.2f}")
+        with col4:
+            st.metric("Max", f"{df[selected_var].max():.2f}")
+        with col5:
+            st.metric("Std Dev", f"{df[selected_var].std():.2f}")
     
     with tab3:
-        st.markdown('<div class="section-header"><h2>Análisis de Correlaciones</h2></div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header"><h2>Correlation Analysis</h2></div>', unsafe_allow_html=True)
         
-        st.info("🔍 **¿Qué buscamos?** Analizar la multicolinealidad entre variables. Correlaciones altas (>0.7) indicarían redundancia y podrían requerir eliminación de features. Correlaciones bajas son ideales para ML.")
+        st.markdown("""
+        <div class="info-box">
+        <strong>Analysis Goal:</strong> Examine multicollinearity between variables. High correlations (>0.7) 
+        would indicate redundancy and potential need for feature elimination. Low correlations are ideal for ML.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        fig = create_correlation_heatmap(df)
+        st.plotly_chart(fig, use_container_width=True)
         
         num_cols = ['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall']
         corr = df[num_cols].corr()
         
         col1, col2 = st.columns([2, 1])
         with col1:
-            st.markdown("##### 📊 Matriz de Correlación")
-            fig = px.imshow(
-                corr, 
-                text_auto='.2f', 
-                color_continuous_scale='RdBu_r', 
-                zmin=-1, 
-                zmax=1,
-                title='Correlaciones entre Variables Predictoras',
-                height=500
-            )
-            st.plotly_chart(fig, use_container_width=True)
-        
-        with col2:
-            st.markdown("##### 📈 Top Correlaciones")
-            # >> Extraer correlaciones significativas <<
+            st.markdown("##### Correlation Interpretation")
             corr_pairs = []
             for i in range(len(corr.columns)):
                 for j in range(i+1, len(corr.columns)):
@@ -479,354 +589,365 @@ elif page == "📊 EDA":
             corr_pairs = sorted(corr_pairs, key=lambda x: abs(x[2]), reverse=True)[:5]
             
             for var1, var2, val in corr_pairs:
-                color = "🔴" if abs(val) > 0.5 else "🟡" if abs(val) > 0.3 else "🟢"
-                st.markdown(f"{color} **{var1}** ↔ **{var2}**: {val:.3f}")
-            
-            st.markdown("---")
-            st.markdown("##### 🎯 Interpretación")
+                strength = "Strong" if abs(val) > 0.5 else "Moderate" if abs(val) > 0.3 else "Weak"
+                direction = "positive" if val > 0 else "negative"
+                st.markdown(f"**{var1} ↔ {var2}**: {val:.3f} ({strength} {direction})")
+        
+        with col2:
+            st.markdown("##### Correlation Scale")
             st.markdown("""
-            - 🟢 < 0.3: Independiente
-            - 🟡 0.3-0.5: Débil
-            - 🔴 > 0.5: Moderada
+            - **|r| < 0.3**: Weak/Independent
+            - **|r| 0.3-0.5**: Weak to Moderate  
+            - **|r| 0.5-0.7**: Moderate
+            - **|r| > 0.7**: Strong (potential multicollinearity)
             """)
         
-        st.success("""
-        **✅ Conclusión del Análisis de Correlación:**
-        - **Correlaciones máximas < ±0.3:** No hay multicolinealidad problemática
-        - **Variables independientes:** Cada feature aporta información única
-        - **No es necesario eliminar features:** Todas son relevantes para el modelo
-        - **K-N (0.25):** Débil positiva - compatible con fertilización conjunta
-        - **Resto < ±0.15:** Prácticamente no correlacionados
-        """)
+        st.markdown("""
+        <div class="info-box-success">
+        <strong>Analysis Conclusion:</strong><br>
+        • Maximum correlations < ±0.3: No problematic multicollinearity detected<br>
+        • Independent variables: Each feature contributes unique information<br>
+        • No feature elimination needed: All features are relevant for the model<br>
+        • Optimal for machine learning: Features provide complementary information
+        </div>
+        """, unsafe_allow_html=True)
     
     with tab4:
-        st.markdown('<div class="section-header"><h2>💡 Insights Clave del Análisis</h2></div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header"><h2>Key Insights</h2></div>', unsafe_allow_html=True)
         
-        st.markdown("### 🎯 Principales Hallazgos del EDA")
-        st.info("Este análisis reveló patrones fundamentales para la agricultura de precisión")
+        st.markdown("### Principal Findings from EDA")
         
         col1, col2 = st.columns(2)
         
         with col1:
-            st.markdown("#### 🌧️ Variables Más Discriminantes")
+            st.markdown("#### Most Discriminating Variables")
             st.markdown("""
-            1. **Rainfall (Precipitación):** Factor #1 - Separa cultivos de riego vs secano
-            2. **Temperature:** Diferencia cultivos tropicales (>30°C) de templados (<20°C)
-            3. **Humidity:** Correlacionado con precipitación, afecta enfermedades
-            4. **pH:** Identifica cultivos específicos (café 4.5-5.5, algodón 7-8)
-            5. **N, P, K:** Requerimientos nutricionales únicos por cultivo
+            1. **Rainfall (Precipitation):** Primary factor - separates irrigated vs rainfed crops
+            2. **Temperature:** Differentiates tropical (>30°C) from temperate (<20°C) crops
+            3. **Humidity:** Correlated with rainfall, affects disease pressure
+            4. **pH:** Identifies crop-specific requirements (coffee 4.5-5.5, cotton 7-8)
+            5. **N, P, K:** Unique nutritional requirements per crop
             """)
             
-            st.markdown("#### 🌾 Grupos de Cultivos Identificados")
+            st.markdown("#### Identified Crop Groups")
             st.markdown("""
-            **Grupo 1: Tropicales Húmedos**
-            - 🍚 Rice, 🥥 Coconut, 🏉 Papaya, 🍌 Banana
-            - Alta humedad (>80%), Alta temp (>25°C), Precipitación >150mm
+            **Tropical Humid Crops**
+            - Rice, Coconut, Papaya, Banana
+            - High humidity (>80%), High temp (>25°C), Rainfall >150mm
             
-            **Grupo 2: Áridos**
-            - 🫘 Chickpea, 🫘 Mothbeans, 𓇢 Lentil
-            - Baja precipitación (<50mm), Resistentes a sequía
+            **Arid Zone Crops**
+            - Chickpea, Mothbeans, Lentil
+            - Low rainfall (<50mm), Drought resistant
             
-            **Grupo 3: Templados**
-            - 🍎 Apple, 🍇 Grapes
-            - Temperatura <20°C, pH ácido, Zonas de montaña
+            **Temperate Zone Crops**
+            - Apple, Grapes
+            - Temperature <20°C, Acidic pH, Mountain zones
             
-            **Grupo 4: Industriales**
-            - ☁️ Cotton, 🌿 Jute, ☕ Coffee
-            - Alto N, Alta precipitación, Agricultura intensiva
+            **Industrial Crops**
+            - Cotton, Jute, Coffee
+            - High N, High rainfall, Intensive agriculture
             """)
         
         with col2:
-            st.markdown("#### 📊 Calidad del Dataset")
-            st.success("""
-            - ✅ **Sin valores nulos:** 0% missing data
-            - ✅ **Sin duplicados:** Todas las observaciones únicas
-            - ✅ **Balance perfecto:** 100 muestras por cultivo
-            - ✅ **Sin multicolinealidad:** Máx correlación 0.25
-            - ✅ **Outliers conservados:** Representan condiciones extremas válidas
-            """)
+            st.markdown("#### Dataset Quality Assessment")
+            st.markdown("""
+            <div class="info-box-success">
+            <strong>Quality Indicators:</strong><br>
+            • 0% missing data<br>
+            • 100% unique observations<br>
+            • Perfect class balance (100 samples/crop)<br>
+            • Maximum correlation: 0.25 (no multicollinearity)<br>
+            • Outliers preserved (represent valid extreme conditions)
+            </div>
+            """, unsafe_allow_html=True)
             
-            st.markdown("#### 🔬 Feature Engineering")
+            st.markdown("#### Feature Engineering")
             st.code("N_over_PK = N / (P + K + 1e-6)", language="python")
-            st.info("""
-            **Justificación Agronómica:**
-            - Captura el balance N:P:K
-            - Leguminosas: bajo N (fijan N2 atmosférico)
-            - Cultivos de hoja: alto N
-            - Mejora separabilidad de clases
-            """)
+            st.markdown("""
+            <div class="info-box">
+            <strong>Agronomic Justification:</strong><br>
+            • Captures N:P:K nutrient balance<br>
+            • Legumes: Low N (atmospheric N₂ fixation)<br>
+            • Leafy crops: High N requirement<br>
+            • Improves class separability
+            </div>
+            """, unsafe_allow_html=True)
             
-            st.markdown("#### 📈 Implicaciones para el Modelo")
-            st.success("""
-            - 🎯 **Alta separabilidad:** Cultivos con requerimientos distintos
-            - 🎯 **No requiere balanceo:** Clases perfectamente equilibradas
-            - 🎯 **Features independientes:** Cada variable aporta info única
-            - 🎯 **Excelente para ML:** Esperamos +95% accuracy
-            """)
-        
-        st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
-        
-        st.markdown("### 🌍 Contexto de Agricultura de Precisión")
-        st.warning("""
-        La **agricultura de precisión** utiliza tecnología y análisis de datos para optimizar 
-        el rendimiento agrícola. Este sistema permite a los agricultores:
-        
-        - 🎯 **Seleccionar el cultivo óptimo** según características del terreno
-        - 💰 **Maximizar rentabilidad** evitando cultivos inadecuados
-        - 🌱 **Reducir riesgo** de pérdidas por elección incorrecta
-        - ♻️ **Optimizar recursos** (agua, fertilizantes, tiempo)
-        - 🌍 **Agricultura sostenible** adaptada a cada región
-        """)
+            st.markdown("#### Model Implications")
+            st.markdown("""
+            <div class="info-box-success">
+            <strong>ML Readiness:</strong><br>
+            • High class separability<br>
+            • No balance adjustment needed<br>
+            • Independent features<br>
+            • Expected accuracy > 95%
+            </div>
+            """, unsafe_allow_html=True)
 
-# >> PÁGINA: MODELO <<
-elif page == "🤖 Modelo":
-    st.markdown('<div class="main-header"><h1>🤖 Modelos de Machine Learning</h1><p>Selección, Comparativa y Performance</p></div>', unsafe_allow_html=True)
+# >> PÁGINA: MODEL <<
+elif page == "Model":
+    st.markdown('<div class="main-header"><h1>Machine Learning Model</h1><p>Selection, Comparison & Performance</p></div>', unsafe_allow_html=True)
     
-    st.info("""
-    **🎯 Problema de Machine Learning:**
-    - **Tipo:** Clasificación Multiclase (22 clases)
-    - **Objetivo:** Predecir el cultivo óptimo basándose en 7 características del suelo y clima
-    - **Métrica principal:** Accuracy (por balance perfecto de clases)
-    - **Estrategia:** Train/Test Split 80/20 con estratificación
-    """)
+    st.markdown("""
+    <div class="info-box">
+    <strong>ML Problem Definition:</strong><br>
+    • Type: Multiclass Classification (22 classes)<br>
+    • Objective: Predict optimal crop based on 7 soil and climate features<br>
+    • Primary Metric: Accuracy (due to perfect class balance)<br>
+    • Strategy: 80/20 Train/Test Split with stratification
+    </div>
+    """, unsafe_allow_html=True)
     
-    tab1, tab2, tab3, tab4 = st.tabs(["🔍 Selección", "📊 Comparación", "🎯 Performance", "📚 Docs"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Model Selection", "Comparison", "Performance", "Documentation"])
     
     with tab1:
-        st.markdown('<div class="section-header"><h2>🔍 Proceso de Selección del Modelo</h2></div>', unsafe_allow_html=True)
-        
-        st.markdown("### 📋 Criterios de Selección")
+        st.markdown('<div class="section-header"><h2>Model Selection Process</h2></div>', unsafe_allow_html=True)
         
         col1, col2 = st.columns(2)
         
         with col1:
-            st.markdown("#### ✅ Requisitos Técnicos")
-            st.success("""
-            - **Accuracy >95%:** Recomendaciones confiables
-            - **F1-Score balanceado:** Evitar sesgo por clase
-            - **Tiempo de entrenamiento <30s:** Reentrenamiento rápido
-            - **Interpretabilidad:** Feature importance explicable
-            - **Robustez:** Mínima necesidad de tuning
-            """)
+            st.markdown("#### Technical Requirements")
+            st.markdown("""
+            <div class="info-box-success">
+            • Accuracy >95%: Reliable recommendations<br>
+            • Balanced F1-Score: Avoid class bias<br>
+            • Training time <30s: Quick retraining<br>
+            • Interpretability: Explainable feature importance<br>
+            • Robustness: Minimal hyperparameter tuning
+            </div>
+            """, unsafe_allow_html=True)
             
-            st.markdown("#### 🌾 Requisitos del Dominio")
-            st.info("""
-            - **Explicabilidad:** Agricultores deben entender la decisión
-            - **Manejo de no-linealidad:** Interacciones suelo-clima complejas
-            - **Robustez a outliers:** Condiciones extremas válidas
-            - **Multi-clase nativa:** 22 cultivos simultáneamente
-            """)
+            st.markdown("#### Domain Requirements")
+            st.markdown("""
+            <div class="info-box">
+            • Explainability for farmers<br>
+            • Non-linear relationship handling<br>
+            • Outlier robustness<br>
+            • Native multiclass support
+            </div>
+            """, unsafe_allow_html=True)
         
         with col2:
-            st.markdown("#### 🤖 Algoritmos Evaluados")
+            st.markdown("#### Algorithms Evaluated")
             
-            st.markdown("**1. Random Forest ⭐ SELECCIONADO**")
-            st.success("""
-            - ✅ Excelente para clasificación multiclase
-            - ✅ Maneja no-linealidades y outliers
-            - ✅ Feature importance interpretable
-            - ✅ Poco overfitting (ensemble method)
-            - ⚠️ Más lento en predicción que XGBoost
-            """)
+            st.markdown("**Random Forest** ⭐ **SELECTED**")
+            st.markdown("""
+            <div class="info-box-success">
+            Excellent for multiclass classification • Handles non-linearities and outliers • 
+            Interpretable feature importance • Minimal overfitting (ensemble method)
+            </div>
+            """, unsafe_allow_html=True)
             
-            st.markdown("**2. XGBoost**")
-            st.info("""
-            - ✅ Performance ligeramente mejor
-            - ✅ Más rápido en predicción
-            - ⚠️ Menos interpretable
-            - ⚠️ Requiere más tuning
-            - 🔮 Candidato para optimización futura
-            """)
+            st.markdown("**XGBoost**")
+            st.markdown("""
+            <div class="info-box">
+            Slightly better performance • Faster prediction • Less interpretable • 
+            Requires more tuning • Future optimization candidate
+            </div>
+            """, unsafe_allow_html=True)
             
-            st.markdown("**3. Otros (SVM, KNN, Logistic Regression)**")
-            st.warning("❌ Descartados por escalabilidad, performance o asunciones no cumplidas")
+            st.markdown("**Others (SVM, KNN, Logistic Regression)**")
+            st.markdown("""
+            <div class="info-box-warning">
+            Discarded due to scalability, performance, or violated assumptions
+            </div>
+            """, unsafe_allow_html=True)
         
         st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
         
-        st.success("""
-        ### 🏆 Justificación: ¿Por qué Random Forest?
-        
-        1. **Performance excepcional out-of-the-box:** ~99% accuracy sin tuning extenso
-        2. **Interpretabilidad:** Feature importances permiten entender qué factores son críticos
-        3. **Robustez:** Ensemble de 200 árboles reduce varianza y overfitting
-        4. **Manejo nativo de no-linealidades:** Interacciones complejas suelo-clima-cultivo
-        5. **No requiere asunciones de distribución:** No paramétrico
-        6. **Validación cruzada estable:** CV scores consistentes (98.99% ±0.31%)
-        """)
+        st.markdown("""
+        <div class="info-box-success">
+        <h4 style='margin-top:0;'>Why Random Forest?</h4>
+        1. <strong>Exceptional out-of-the-box performance:</strong> ~99% accuracy without extensive tuning<br>
+        2. <strong>Interpretability:</strong> Feature importances reveal critical factors<br>
+        3. <strong>Robustness:</strong> Ensemble of 200 trees reduces variance and overfitting<br>
+        4. <strong>Native non-linearity handling:</strong> Complex soil-climate-crop interactions<br>
+        5. <strong>No distribution assumptions:</strong> Non-parametric approach<br>
+        6. <strong>Stable cross-validation:</strong> CV scores consistent (98.99% ±0.31%)
+        </div>
+        """, unsafe_allow_html=True)
     
     with tab2:
-        st.markdown('<div class="section-header"><h2>📊 Comparación Exhaustiva de Algoritmos</h2></div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header"><h2>Algorithm Comparison</h2></div>', unsafe_allow_html=True)
         
-        st.markdown("### 🔬 Resultados Experimentales")
+        st.markdown("### Experimental Results")
         
         comparison_data = {
-            'Modelo': ['Random Forest', 'XGBoost', 'SVM (RBF)', 'KNN (k=5)', 'Logistic Regression'],
-            'Accuracy (Test)': [99.09, 98.86, 97.59, 95.23, 88.41],
-            'F1-Score (Macro)': [0.9908, 0.9884, 0.9756, 0.9518, 0.8832],
+            'Model': ['Random Forest', 'XGBoost', 'SVM (RBF)', 'KNN (k=5)', 'Logistic Regression'],
+            'Accuracy': [99.09, 98.86, 97.59, 95.23, 88.41],
+            'F1-Score': [0.9908, 0.9884, 0.9756, 0.9518, 0.8832],
             'Precision': [0.9912, 0.9891, 0.9762, 0.9534, 0.8856],
             'Recall': [0.9909, 0.9886, 0.9759, 0.9523, 0.8841],
-            'Tiempo Entrenamiento (s)': [8.5, 12.3, 45.7, 2.1, 1.8],
-            'Tiempo Predicción (ms)': [15.2, 8.7, 98.3, 234.5, 0.5]
+            'Training Time (s)': [8.5, 12.3, 45.7, 2.1, 1.8],
+            'Prediction Time (ms)': [15.2, 8.7, 98.3, 234.5, 0.5]
         }
         
         comparison_df = pd.DataFrame(comparison_data)
         
-        # >> Aplicar estilos <<
-        styled_df = comparison_df.style.background_gradient(
-            subset=['Accuracy (Test)', 'F1-Score (Macro)', 'Precision', 'Recall'], 
-            cmap='Greens'
-        ).background_gradient(
-            subset=['Tiempo Entrenamiento (s)', 'Tiempo Predicción (ms)'], 
-            cmap='Reds_r'
+        st.dataframe(
+            comparison_df.style.background_gradient(
+                subset=['Accuracy', 'F1-Score', 'Precision', 'Recall'], 
+                cmap='Blues'
+            ).background_gradient(
+                subset=['Training Time (s)', 'Prediction Time (ms)'], 
+                cmap='Reds_r'
+            ),
+            use_container_width=True
         )
         
-        st.dataframe(styled_df, use_container_width=True)
-        
-        st.info("""
-        **🎯 Interpretación de Resultados:**
-        - **Random Forest:** Mejor balance accuracy/interpretabilidad/estabilidad
-        - **XGBoost:** Performance comparable, pero menos interpretable
-        - **SVM:** Buen accuracy pero tiempo de entrenamiento prohibitivo
-        - **KNN:** Predicción muy lenta (lazy learning), no escalable
-        - **Logistic Regression:** Asume linealidad - inadecuado para este problema
-        """)
+        st.markdown("""
+        <div class="info-box">
+        <strong>Results Interpretation:</strong><br>
+        • <strong>Random Forest:</strong> Best accuracy/interpretability/stability balance<br>
+        • <strong>XGBoost:</strong> Comparable performance, less interpretable<br>
+        • <strong>SVM:</strong> Good accuracy but prohibitive training time<br>
+        • <strong>KNN:</strong> Very slow prediction (lazy learning), not scalable<br>
+        • <strong>Logistic Regression:</strong> Assumes linearity - inadequate for this problem
+        </div>
+        """, unsafe_allow_html=True)
         
         st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
         
-        st.markdown("### 📈 Visualización Comparativa")
+        st.markdown("### Visual Comparison")
         
-        col1, col2 = st.columns(2)
+        fig = make_subplots(
+            rows=1, cols=2,
+            subplot_titles=('Model Accuracy', 'Training Time'),
+            specs=[[{"type": "bar"}, {"type": "bar"}]]
+        )
         
-        with col1:
-            st.markdown("##### Accuracy por Modelo")
-            fig = go.Figure(go.Bar(
-                x=comparison_df['Modelo'],
-                y=comparison_df['Accuracy (Test)'],
-                marker=dict(color=comparison_df['Accuracy (Test)'], colorscale='Greens'),
-                text=[f"{v:.2f}%" for v in comparison_df['Accuracy (Test)']],
-                textposition='auto'
-            ))
-            fig.update_layout(
-                yaxis_title='Accuracy (%)',
-                height=400,
-                yaxis=dict(range=[85, 100])
-            )
-            st.plotly_chart(fig, use_container_width=True)
+        fig.add_trace(
+            go.Bar(
+                x=comparison_df['Model'],
+                y=comparison_df['Accuracy'],
+                marker_color=['#1e3a8a' if m == 'Random Forest' else '#3b82f6' for m in comparison_df['Model']],
+                text=[f"{v:.2f}%" for v in comparison_df['Accuracy']],
+                textposition='outside',
+                name='Accuracy',
+                showlegend=False
+            ),
+            row=1, col=1
+        )
         
-        with col2:
-            st.markdown("##### Tiempo de Entrenamiento")
-            fig = go.Figure(go.Bar(
-                x=comparison_df['Modelo'],
-                y=comparison_df['Tiempo Entrenamiento (s)'],
-                marker=dict(color=comparison_df['Tiempo Entrenamiento (s)'], colorscale='Reds'),
-                text=[f"{v:.1f}s" for v in comparison_df['Tiempo Entrenamiento (s)']],
-                textposition='auto'
-            ))
-            fig.update_layout(
-                yaxis_title='Tiempo (segundos)',
-                height=400
-            )
-            st.plotly_chart(fig, use_container_width=True)
+        fig.add_trace(
+            go.Bar(
+                x=comparison_df['Model'],
+                y=comparison_df['Training Time (s)'],
+                marker_color=['#1e3a8a' if m == 'Random Forest' else '#3b82f6' for m in comparison_df['Model']],
+                text=[f"{v:.1f}s" for v in comparison_df['Training Time (s)']],
+                textposition='outside',
+                name='Time',
+                showlegend=False
+            ),
+            row=1, col=2
+        )
         
-        st.markdown("### 🔮 Validación Cruzada (5-Fold Stratified)")
-        st.info("Evaluación de estabilidad y generalización con **StratifiedKFold Cross-Validation**")
+        fig.update_layout(
+            height=450,
+            template='plotly_white',
+            font=dict(family='Inter, sans-serif'),
+            yaxis_title='Accuracy (%)',
+            yaxis2_title='Time (seconds)'
+        )
+        
+        st.plotly_chart(fig, use_container_width=True)
+        
+        st.markdown("### Cross-Validation Results (5-Fold Stratified)")
         
         cv_data = {
-            'Modelo': ['Random Forest', 'XGBoost', 'SVM'],
+            'Model': ['Random Forest', 'XGBoost', 'SVM'],
             'Fold 1': [98.86, 98.58, 97.44],
             'Fold 2': [99.15, 98.86, 97.30],
             'Fold 3': [98.58, 98.43, 96.88],
             'Fold 4': [99.43, 99.15, 98.01],
             'Fold 5': [98.93, 99.29, 97.72],
-            'Media': [98.99, 98.86, 97.47],
+            'Mean': [98.99, 98.86, 97.47],
             'Std Dev': [0.31, 0.35, 0.43]
         }
         
         cv_df = pd.DataFrame(cv_data)
         st.dataframe(
-            cv_df.style.background_gradient(subset=['Media'], cmap='Greens')
-                        .background_gradient(subset=['Std Dev'], cmap='Reds_r'),
+            cv_df.style.background_gradient(subset=['Mean'], cmap='Blues')
+                      .background_gradient(subset=['Std Dev'], cmap='Reds_r'),
             use_container_width=True
         )
         
-        st.success("✅ **Conclusión CV:** Random Forest muestra la **menor desviación estándar (±0.31%)**, indicando mayor estabilidad y mejor generalización. XGBoost es ligeramente más variable.")
+        st.markdown("""
+        <div class="info-box-success">
+        <strong>Cross-Validation Conclusion:</strong> Random Forest exhibits the lowest standard deviation (±0.31%), 
+        indicating superior stability and better generalization capability compared to other models.
+        </div>
+        """, unsafe_allow_html=True)
     
     with tab3:
-        st.markdown('<div class="section-header"><h2>🎯 Performance y Métricas del Modelo</h2></div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header"><h2>Performance Metrics</h2></div>', unsafe_allow_html=True)
         
-        st.markdown("### 📊 Métricas en Test Set (20% del dataset)")
+        st.markdown("### Test Set Performance (20% of dataset)")
         
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric("Accuracy", "99.09%", help="Proporción de predicciones correctas")
+            st.metric("Accuracy", "99.09%", help="Proportion of correct predictions")
         with col2:
-            st.metric("F1-Score", "0.9908", help="Media armónica entre precisión y recall")
+            st.metric("F1-Score", "0.9908", help="Harmonic mean of precision and recall")
         with col3:
-            st.metric("Precision", "0.9912", help="De las predicciones positivas, cuántas son correctas")
+            st.metric("Precision", "0.9912", help="Of positive predictions, how many are correct")
         with col4:
-            st.metric("Recall", "0.9909", help="De los casos reales, cuántos fueron detectados")
+            st.metric("Recall", "0.9909", help="Of actual positives, how many were detected")
         
-        st.success("✅ **Performance Excepcional:** Con 99.09% accuracy, el modelo comete solo ~4 errores en 440 predicciones del test set. Esto es ideal para aplicaciones de agricultura de precisión.")
+        st.markdown("""
+        <div class="info-box-success">
+        <strong>Exceptional Performance:</strong> With 99.09% accuracy, the model makes only ~4 errors in 440 test predictions. 
+        This is ideal for precision agriculture applications.
+        </div>
+        """, unsafe_allow_html=True)
         
         st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
         
-        st.markdown("### 🔍 Feature Importance - Variables Más Importantes")
+        st.markdown("### Feature Importance Analysis")
         
-        feature_importance = {
-            'rainfall': 0.245, 'N': 0.182, 'K': 0.156, 'P': 0.138, 
-            'humidity': 0.121, 'temperature': 0.089, 'ph': 0.052, 'N_over_PK': 0.017
-        }
-        
-        importance_df = pd.DataFrame(
-            list(feature_importance.items()), 
-            columns=['Feature', 'Importance']
-        ).sort_values('Importance', ascending=False)
+        fig = create_feature_importance_plot()
+        st.plotly_chart(fig, use_container_width=True)
         
         col1, col2 = st.columns([2, 1])
-        
         with col1:
-            fig = go.Figure(go.Bar(
-                x=importance_df['Importance'], 
-                y=importance_df['Feature'], 
-                orientation='h', 
-                marker=dict(color=importance_df['Importance'], colorscale='Viridis'), 
-                text=[f"{v:.1%}" for v in importance_df['Importance']], 
-                textposition='auto'
-            ))
-            fig.update_layout(
-                title='Feature Importance (Reducción de Gini)',
-                xaxis_title='Importancia Relativa',
-                yaxis_title='Variable',
-                height=450
-            )
-            st.plotly_chart(fig, use_container_width=True)
+            st.markdown("#### Interpretation")
+            st.markdown("""
+            The feature importance analysis reveals that **Rainfall** is the most critical predictor (24.5%), 
+            followed by **Nitrogen** (18.2%) and **Potassium** (15.6%). This indicates that climatic factors 
+            and macronutrients play the most significant roles in determining optimal crop selection.
+            
+            All features contribute meaningful information to the model, with even the least important feature 
+            (N_over_PK ratio) providing some predictive value. This justifies the inclusion of all features 
+            in the final model.
+            """)
         
         with col2:
-            st.markdown("##### 🎯 Top Variables")
+            st.markdown("#### Feature Rankings")
             st.markdown("""
-            1. **🌧️ Rainfall (24.5%)**
-            2. **🌱 Nitrógeno (18.2%)**
-            3. **� Potasio (15.6%)**
-            4. **🔬 Fósforo (13.8%)**
-            5. **💧 Humedad (12.1%)**
-            """)
-            
-            st.info("""
-            **Interpretación:**
-            - Rainfall es el predictor #1
-            - Variables climáticas ≈ Nutricionales
-            - Todas las features aportan valor
+            1. **Rainfall (24.5%)**
+            2. **Nitrogen (18.2%)**
+            3. **Potassium (15.6%)**
+            4. **Phosphorus (13.8%)**
+            5. **Humidity (12.1%)**
+            6. **Temperature (8.9%)**
+            7. **pH (5.2%)**
+            8. **N_over_PK (1.7%)**
             """)
         
-        st.success("✅ De 22 cultivos, 17 tienen precisión perfecta (100%) en el test set")
+        st.markdown("""
+        <div class="info-box-success">
+        <strong>Per-Crop Performance:</strong> Of 22 crops, 17 achieve 100% precision on the test set, 
+        demonstrating excellent discriminative capability across most crop classes.
+        </div>
+        """, unsafe_allow_html=True)
     
     with tab4:
-        st.markdown('<div class="section-header"><h2>📚 Documentación Técnica</h2></div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header"><h2>Technical Documentation</h2></div>', unsafe_allow_html=True)
         
         col1, col2 = st.columns(2)
         
         with col1:
-            st.markdown("### 🔧 Arquitectura del Pipeline")
+            st.markdown("### Pipeline Architecture")
             st.code("""
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
@@ -842,154 +963,132 @@ pipeline = Pipeline([
 ])
             """, language="python")
             
-            st.markdown("### 📦 Archivos del Modelo")
+            st.markdown("### Model Files")
             st.markdown("""
-            - **`crop_recommender_rf.joblib`** (3.2 MB)
-            - **`label_encoder.joblib`** (1.5 KB)
+            - **crop_recommender_rf.joblib** (3.2 MB)
+            - **label_encoder.joblib** (1.5 KB)
             """)
-            
-            st.markdown("### 📥 Descargar Modelos")
-            
-            # >> Funcionalidad de descarga <<
-            col_a, col_b = st.columns(2)
-            
-            with col_a:
-                try:
-                    with open(MODEL_PATH, 'rb') as f:
-                        model_bytes = f.read()
-                    st.download_button(
-                        label="📥 Descargar Pipeline RF",
-                        data=model_bytes,
-                        file_name="crop_recommender_rf.joblib",
-                        mime="application/octet-stream",
-                        help="Random Forest + StandardScaler"
-                    )
-                except:
-                    st.error("Error al cargar el modelo")
-            
-            with col_b:
-                try:
-                    with open(ENCODER_PATH, 'rb') as f:
-                        encoder_bytes = f.read()
-                    st.download_button(
-                        label="📥 Descargar Label Encoder",
-                        data=encoder_bytes,
-                        file_name="label_encoder.joblib",
-                        mime="application/octet-stream",
-                        help="Codificador de cultivos"
-                    )
-                except:
-                    st.error("Error al cargar el encoder")
         
         with col2:
-            st.markdown("### 📊 División del Dataset")
+            st.markdown("### Dataset Split")
             st.markdown("""
-            - **Train:** 1,760 muestras (80%)
-            - **Test:** 440 muestras (20%)
-            - **Estratificación:** ✅ Aplicada
+            - **Train:** 1,760 samples (80%)
+            - **Test:** 440 samples (20%)
+            - **Stratification:** Applied
             """)
             
-            st.markdown("### 🔮 Mejoras Futuras")
+            st.markdown("### Future Improvements")
             st.markdown("""
-            - [ ] GridSearchCV para optimización
-            - [ ] Comparación con XGBoost
-            - [ ] SHAP values para interpretabilidad
-            - [ ] Ensemble RF + XGBoost
-            - [ ] Implementación de API REST
+            - GridSearchCV hyperparameter optimization
+            - XGBoost comparison and ensemble
+            - SHAP values for interpretability
+            - REST API implementation
+            - Model versioning and monitoring
             """)
-        
-        st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
-        
-        st.info("""
-        ### 📈 Proceso de Entrenamiento
-        
-        1. **Carga de datos:** Crop_recommendation.csv (2,200 observaciones)
-        2. **Feature Engineering:** Creación de N_over_PK
-        3. **Encoding:** LabelEncoder para los 22 cultivos
-        4. **Split Train/Test:** 80/20 estratificado
-        5. **Entrenamiento del Pipeline:**
-           - StandardScaler ajusta μ y σ del train set
-           - Random Forest entrena 200 árboles en paralelo
-           - Tiempo total: ~8.5 segundos
-        6. **Evaluación:** Métricas en test set + 5-Fold CV
-        7. **Serialización:** joblib.dump() para deployment
-        """)
-        
-        st.markdown("### 💡 Código de Uso")
-        st.code("""
-import joblib
-import numpy as np
 
-# Cargar modelos
-pipeline = joblib.load('crop_recommender_rf.joblib')
-le = joblib.load('label_encoder.joblib')
-
-# Predecir
-N_over_PK = N / (P + K + 1e-6)
-features = np.array([[N, P, K, temp, hum, ph, rain, N_over_PK]])
-pred_encoded = pipeline.predict(features)
-crop = le.inverse_transform(pred_encoded)[0]
-        """, language="python")
-
-# >> PÁGINA: PREDICCIÓN <<
-elif page == "🔮 Predicción":
-    st.markdown('<div class="main-header"><h1>🔮 Predicción de Cultivo Óptimo</h1><p>Recomendación Personalizada con IA</p></div>', unsafe_allow_html=True)
+# >> PÁGINA: PREDICTION <<
+elif page == "Prediction":
+    st.markdown('<div class="main-header"><h1>Crop Prediction</h1><p>AI-Powered Recommendation System</p></div>', unsafe_allow_html=True)
     
     try:
         pipeline, le = load_model()
         model_loaded = True
     except:
-        st.error("❌ Error al cargar modelo")
+        st.error("Error loading model. Please check model files.")
         model_loaded = False
     
     if model_loaded:
-        st.markdown('<div class="info-box-blue"><h4>💡 Instrucciones</h4><p>Ajusta los controles con las características de tu terreno.</p></div>', unsafe_allow_html=True)
+        st.markdown("""
+        <div class="info-box">
+        <strong>Instructions:</strong> Adjust the controls below with your land characteristics to receive 
+        a personalized crop recommendation based on machine learning analysis.
+        </div>
+        """, unsafe_allow_html=True)
         
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown("#### 🌱 Composición del Suelo")
-            N = st.slider("Nitrógeno (N)", 0, 140, 50)
-            P = st.slider("Fósforo (P)", 5, 145, 50)
-            K = st.slider("Potasio (K)", 5, 205, 50)
-            ph = st.slider("pH", 3.5, 9.9, 6.5, 0.1)
+            st.markdown("#### Soil Composition")
+            N = st.slider("Nitrogen (N)", 0, 140, 50, help="Nitrogen content in soil")
+            P = st.slider("Phosphorus (P)", 5, 145, 50, help="Phosphorus content in soil")
+            K = st.slider("Potassium (K)", 5, 205, 50, help="Potassium content in soil")
+            ph = st.slider("pH Level", 3.5, 9.9, 6.5, 0.1, help="Soil pH level")
         
         with col2:
-            st.markdown("#### 🌡️ Condiciones Climáticas")
-            temperature = st.slider("Temperatura (°C)", 8.0, 44.0, 25.0, 0.5)
-            humidity = st.slider("Humedad (%)", 14, 99, 70)
-            rainfall = st.slider("Precipitación (mm)", 20, 300, 100)
+            st.markdown("#### Climate Conditions")
+            temperature = st.slider("Temperature (°C)", 8.0, 44.0, 25.0, 0.5, help="Average temperature")
+            humidity = st.slider("Humidity (%)", 14, 99, 70, help="Relative humidity")
+            rainfall = st.slider("Rainfall (mm)", 20, 300, 100, help="Average rainfall")
         
-        if st.button("🌾 Predecir Cultivo Recomendado", type="primary"):
-            with st.spinner("🔬 Analizando..."):
+        if st.button("Generate Recommendation", type="primary"):
+            with st.spinner("Analyzing data..."):
                 crop, top_crops = predict_crop(N, P, K, temperature, humidity, ph, rainfall, pipeline, le)
             
-            st.success("✅ Completado!")
-            icon = CROP_ICONS.get(crop, '🌱')
+            st.success("Analysis Complete!")
             confidence = top_crops[crop] * 100
+            crop_display = CROP_NAMES.get(crop, crop.capitalize())
             
             st.markdown(f"""
-            <div style='background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); padding: 2rem; border-radius: 15px; text-align: center; color: white; margin: 2rem 0;'>
-                <h1 style='font-size: 3rem; margin: 0;'>{icon}</h1>
-                <h2>Cultivo Recomendado</h2>
-                <h1 style='font-size: 2.5rem; text-transform: uppercase;'>{crop}</h1>
-                <p style='font-size: 1.5rem;'>Confianza: {confidence:.2f}%</p>
+            <div style='background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 3rem 2rem; border-radius: 12px; text-align: center; color: white; margin: 2rem 0; box-shadow: 0 10px 30px rgba(0,0,0,0.2);'>
+                <h2 style='margin: 0; font-size: 1.25rem; opacity: 0.9; font-weight: 500;'>Recommended Crop</h2>
+                <h1 style='font-size: 3rem; text-transform: uppercase; margin: 1rem 0; font-weight: 700; letter-spacing: 2px;'>{crop_display}</h1>
+                <p style='font-size: 1.75rem; margin: 0; opacity: 0.95;'>Confidence: {confidence:.1f}%</p>
             </div>
             """, unsafe_allow_html=True)
             
-            top_df = pd.DataFrame([(c, p) for c, p in top_crops.items()], columns=['Cultivo', 'Probabilidad'])
-            top_df['Probabilidad (%)'] = (top_df['Probabilidad'] * 100).round(2)
-            top_df['Cultivo'] = top_df['Cultivo'].apply(lambda x: f"{CROP_ICONS.get(x, '🌱')} {x.capitalize()}")
+            st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
+            st.markdown('<div class="section-header"><h2>Alternative Recommendations</h2></div>', unsafe_allow_html=True)
             
-            fig = go.Figure(go.Bar(x=top_df['Probabilidad (%)'], y=top_df['Cultivo'], orientation='h', marker=dict(color=top_df['Probabilidad (%)'], colorscale='Greens'), text=[f"{v:.2f}%" for v in top_df['Probabilidad (%)']], textposition='auto'))
-            fig.update_layout(title='Top 5 Cultivos', xaxis_title='Probabilidad (%)', height=350)
+            top_df = pd.DataFrame([
+                {
+                    'Crop': CROP_NAMES.get(c, c.capitalize()), 
+                    'Probability': p,
+                    'Confidence': f"{p*100:.1f}%"
+                } 
+                for c, p in top_crops.items()
+            ])
+            
+            fig = go.Figure(go.Bar(
+                x=top_df['Probability'] * 100,
+                y=top_df['Crop'],
+                orientation='h',
+                marker=dict(
+                    color=top_df['Probability'] * 100,
+                    colorscale=[[0, '#bfdbfe'], [1, '#1e3a8a']],
+                    showscale=False
+                ),
+                text=top_df['Confidence'],
+                textposition='outside',
+                hovertemplate='<b>%{y}</b><br>Confidence: %{x:.1f}%<extra></extra>'
+            ))
+            
+            fig.update_layout(
+                title='Top 5 Crop Recommendations',
+                xaxis_title='Confidence (%)',
+                yaxis_title='',
+                height=400,
+                template='plotly_white',
+                font=dict(family='Inter, sans-serif'),
+                xaxis=dict(range=[0, 105])
+            )
+            
             st.plotly_chart(fig, use_container_width=True)
+            
+            st.markdown("""
+            <div class="info-box">
+            <strong>How to interpret these results:</strong><br>
+            The confidence percentages indicate how suitable each crop is for your provided conditions based on 
+            historical data from 2,200 successful cultivations. Higher confidence suggests better adaptation to 
+            your specific soil and climate parameters.
+            </div>
+            """, unsafe_allow_html=True)
 
+# >> FOOTER <<
 st.markdown("""
-<div style='text-align: center; padding: 2rem; background: #f8f9fa; border-radius: 10px; margin-top: 3rem;'>
-    <p style='color: #7f8c8d; font-size: 0.9rem;'>
-        <b>🌾 Sistema de Recomendación de Cultivos</b><br>
-        Agricultura de Precisión | Versión 2.0 | 2025<br>
-        Desarrollado por Christian Rueda-Ayala
+<div style='text-align: center; padding: 2.5rem 1rem; background: #f8fafc; border-radius: 10px; margin-top: 4rem; border: 1px solid #e5e7eb;'>
+    <p style='color: #64748b; font-size: 0.95rem; margin: 0;'>
+        <strong style='color: #1e293b;'>Crop Recommendation System</strong><br>
+        Precision Agriculture | Machine Learning Application<br>
+        <span style='font-size: 0.85rem;'>Developed by Christian Rueda-Ayala | 2026</span>
     </p>
 </div>
 """, unsafe_allow_html=True)

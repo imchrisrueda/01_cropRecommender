@@ -1,4 +1,4 @@
-# 🌾 Sistema de Recomendación de Cultivos - Agricultura de Precisión
+# Sistema de Recomendación de Cultivos - Agricultura de Precisión
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
 [![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.3.0-orange)](https://scikit-learn.org/)
@@ -9,22 +9,22 @@ Sistema inteligente de recomendación de cultivos basado en Machine Learning que
 
 ---
 
-## 📋 Tabla de Contenidos
+## Tabla de Contenidos
 
-- [Descripción](#-descripción)
-- [Características](#-características)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Instalación](#-instalación)
-- [Uso](#-uso)
-- [Dataset](#-dataset)
-- [Modelo](#-modelo)
-- [Resultados](#-resultados)
-- [Documentación](#-documentación)
-- [Contribución](#-contribución)
+- [Descripción](#descripción)
+- [Características](#características)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Instalación](#instalación)
+- [Uso](#uso)
+- [Dataset](#dataset)
+- [Modelo](#modelo)
+- [Resultados](#resultados)
+- [Documentación](#documentación)
+- [Contribución](#contribución)
 
 ---
 
-## 🎯 Descripción
+## Descripción
 
 Este proyecto utiliza **Machine Learning** para recomendar cultivos basándose en:
 
@@ -35,53 +35,56 @@ El sistema analiza **22 tipos de cultivos** diferentes y proporciona recomendaci
 
 ---
 
-## ✨ Características
+## Características
 
-✅ **Análisis Exploratorio Completo (EDA):** Visualizaciones interactivas y conclusiones del dominio  
-✅ **Modelo de ML Optimizado:** Random Forest con 99% accuracy  
-✅ **Aplicación Web Interactiva:** Interfaz Streamlit fácil de usar  
-✅ **Documentación Exhaustiva:** EDA.md y MODEL.md detallados  
-✅ **Código PEP 8:** Cumple con estándares de Python  
-✅ **Reproducibilidad:** Semillas fijas y pipeline serializado
+- **Análisis Exploratorio Completo (EDA):** Visualizaciones interactivas y conclusiones del dominio  
+- **Modelo de ML Optimizado:** Random Forest con 99% accuracy  
+- **Aplicación Web Interactiva:** Interfaz Streamlit fácil de usar  
+- **Documentación Exhaustiva:** EDA.md y MODEL.md detallados  
+- **Código PEP 8:** Cumple con estándares de Python  
+- **Reproducibilidad:** Semillas fijas y pipeline serializado
 
 ---
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 01_proyecto/
 │
-├── app.py                          # >> Aplicación Streamlit principal <<
-├── requirements.txt                # >> Dependencias del proyecto <<
-├── README.md                       # >> Este archivo <<
+├── streamlit/
+│   └── app.py                      # Aplicación Streamlit principal
 │
 ├── data/
-│   ├── Crop_recommendation.csv     # >> Dataset principal <<
-│   └── datacard.md                 # >> Descripción del dataset <<
+│   ├── Crop_recommendation.csv     # Dataset principal
+│   └── datacard.md                 # Descripción del dataset
 │
 ├── notebooks/
-│   ├── eda_full.ipynb              # >> Análisis exploratorio completo <<
-│   └── eda.ipynb                   # >> Versión resumida <<
+│   ├── eda_full.ipynb              # Análisis exploratorio completo
+│   ├── eda.ipynb                   # Versión resumida
+│   └── model_training.ipynb        # Entrenamiento y comparación de modelos
 │
 ├── functions/
-│   ├── __init__.py                 # >> Inicialización del módulo <<
-│   └── func_util.py                # >> Funciones utilitarias (PEP 8) <<
+│   ├── __init__.py                 # Inicialización del módulo
+│   └── func_util.py                # Funciones utilitarias (PEP 8)
 │
 ├── models/
-│   ├── crop_recommender_rf.joblib  # >> Modelo entrenado <<
-│   └── label_encoder.joblib        # >> Codificador de etiquetas <<
+│   ├── crop_recommender_rf.joblib  # Modelo entrenado
+│   └── label_encoder.joblib        # Codificador de etiquetas
 │
 ├── reports/
-│   ├── EDA.md                      # >> Documentación del EDA <<
-│   ├── MODEL.md                    # >> Documentación del modelo <<
-│   └── eda_report.md               # >> Reporte automático <<
+│   ├── EDA.md                      # Documentación del EDA
+│   ├── MODEL.md                    # Documentación del modelo
+│   └── eda_report.md               # Reporte automático
 │
-└── prompt_style.md                 # >> Guía de estilo del proyecto <<
+├── requirements.txt                # Dependencias del proyecto
+├── README.md                       # Este archivo
+├── RESUMEN_EJECUTIVO.md            # Resumen ejecutivo del proyecto
+└── prompt_style.md                 # Guía de estilo del proyecto
 ```
 
 ---
 
-## 🚀 Instalación
+## Instalación
 
 ### 1. Clonar el repositorio
 
@@ -106,12 +109,12 @@ pip install -r requirements.txt
 
 ---
 
-## 💻 Uso
+## Uso
 
 ### Ejecutar Aplicación Streamlit
 
 ```bash
-streamlit run app.py
+streamlit run streamlit/app.py
 ```
 
 La aplicación se abrirá en `http://localhost:8501`
@@ -143,7 +146,7 @@ print(f"Cultivo recomendado: {crop}")  # >> Output: rice <<
 
 ---
 
-## 📊 Dataset
+## Dataset
 
 - **Fuente:** Datos de agricultura de India (rainfall, climate, fertilizer)
 - **Tamaño:** 2,200 observaciones × 8 columnas
@@ -169,7 +172,7 @@ rice, maize, chickpea, kidneybeans, pigeonpeas, mothbeans, mungbean, blackgram, 
 
 ---
 
-## 🤖 Modelo
+## Modelo
 
 ### Algoritmo: Random Forest Classifier
 
@@ -200,7 +203,7 @@ Pipeline([
 
 ---
 
-## 📈 Resultados
+## Resultados
 
 ### Métricas de Evaluación
 
@@ -220,7 +223,7 @@ Pipeline([
 
 ---
 
-## 📚 Documentación
+## Documentación
 
 ### Documentos Principales
 
@@ -235,7 +238,7 @@ Pipeline([
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 - **Python 3.12.3**
 - **Pandas:** Manipulación de datos
@@ -247,25 +250,25 @@ Pipeline([
 
 ---
 
-## 🌟 Características de la Aplicación Streamlit
+## Características de la Aplicación Streamlit
 
-### 📖 Página de Inicio
+### Página de Inicio
 - Resumen del sistema
 - Métricas clave
 - Lista de cultivos disponibles
 
-### 📊 Análisis EDA
+### Análisis EDA
 - Vista del dataset
 - Distribuciones de variables
 - Matriz de correlación
 - Perfiles de cultivos (radar charts)
 
-### 🤖 Información del Modelo
+### Información del Modelo
 - Métricas de performance
 - Feature importance interactivo
 - Documentación técnica
 
-### 🔮 Predicción
+### Predicción
 - Interfaz con sliders para inputs
 - Predicción en tiempo real
 - Top-5 cultivos con probabilidades
@@ -273,7 +276,7 @@ Pipeline([
 
 ---
 
-## 🔄 Flujo de Trabajo
+## Flujo de Trabajo
 
 ```
 1. Carga de datos → data/Crop_recommendation.csv
@@ -287,7 +290,7 @@ Pipeline([
 
 ---
 
-## 📝 Estilo de Código
+## Estilo de Código
 
 Este proyecto sigue las directrices de **[prompt_style.md](prompt_style.md)**:
 
@@ -298,7 +301,7 @@ Este proyecto sigue las directrices de **[prompt_style.md](prompt_style.md)**:
 
 ---
 
-## 🚧 Mejoras Futuras
+## Mejoras Futuras
 
 - [ ] Comparación con XGBoost/LightGBM
 - [ ] Optimización de hiperparámetros (GridSearchCV)
@@ -309,7 +312,7 @@ Este proyecto sigue las directrices de **[prompt_style.md](prompt_style.md)**:
 
 ---
 
-## 🤝 Contribución
+## Contribución
 
 Las contribuciones son bienvenidas. Por favor:
 
@@ -321,20 +324,20 @@ Las contribuciones son bienvenidas. Por favor:
 
 ---
 
-## 📄 Licencia
+## Licencia
 
 Este proyecto es de uso educativo para el Bootcamp de Data e IA.
 
 ---
 
-## 👤 Autor
+## Autor
 
 **Christian Rueda**
 - GitHub: [@imchrisrueda](https://github.com/imchrisrueda)
 
 ---
 
-## 🙏 Agradecimientos
+## Agradecimientos
 
 - Dataset de agricultura de India
 - Comunidad de Scikit-learn
@@ -344,6 +347,6 @@ Este proyecto es de uso educativo para el Bootcamp de Data e IA.
 
 <div align="center">
 
-**🌾 Cultivando el futuro con Data Science 🌾**
+**Cultivando el futuro con Data Science**
 
 </div>

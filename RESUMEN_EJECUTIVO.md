@@ -1,12 +1,12 @@
-# 🌾 Sistema de Recomendación de Cultivos - Resumen Ejecutivo
+# Sistema de Recomendación de Cultivos - Resumen Ejecutivo
 
-## 🎯 Objetivo del Proyecto
+## Objetivo del Proyecto
 
-Desarrollar un sistema de **agricultura de precisión** que utiliza Machine Learning para recomendar el cultivo óptimo según las características del suelo y condiciones climáticas.
+Desarrollar un sistema de **agricultura de precisión** que utiliza Machine Learning para recomendar el cultivo óptimo según las características del suelo y condiciones climáticas, maximizando la productividad agrícola y optimizando el uso de recursos.
 
 ---
 
-## 📊 Resultados Clave
+## Resultados Clave
 
 ### Performance del Modelo
 
@@ -27,17 +27,17 @@ Desarrollar un sistema de **agricultura de precisión** que utiliza Machine Lear
 
 ---
 
-## 🤖 Tecnología
+## Tecnología
 
 ### Modelo Seleccionado: Random Forest
 
-**¿Por qué Random Forest?**
+**Justificación de selección:**
 
-✅ **Performance superior**: 98.99% accuracy en validación cruzada  
-✅ **Estabilidad**: Baja varianza (±0.31%)  
-✅ **Interpretabilidad**: Feature importances claras  
-✅ **Velocidad**: 8.5s entrenamiento (vs 45.7s SVM)  
-✅ **Robustez**: Manejo automático de outliers  
+- **Performance superior**: 98.99% accuracy en validación cruzada  
+- **Estabilidad**: Baja varianza (±0.31%)  
+- **Interpretabilidad**: Feature importances claras  
+- **Velocidad**: 8.5s entrenamiento (vs 45.7s SVM)  
+- **Robustez**: Manejo automático de outliers  
 
 **Arquitectura**:
 - 200 árboles de decisión
@@ -49,66 +49,75 @@ Desarrollar un sistema de **agricultura de precisión** que utiliza Machine Lear
 
 | Modelo | Accuracy (CV) | F1-Score | Tiempo (s) | Seleccionado |
 |--------|---------------|----------|------------|--------------|
-| **Random Forest** | **98.99%** | **0.9898** | **8.5** | ✅ **SÍ** |
-| XGBoost | 98.86% | 0.9884 | 12.3 | ❌ No |
-| SVM | 97.59% | 0.9756 | 45.7 | ❌ No |
+| **Random Forest** | **98.99%** | **0.9898** | **8.5** | **✓** |
+| XGBoost | 98.86% | 0.9884 | 12.3 | ✗ |
+| SVM | 97.59% | 0.9756 | 45.7 | ✗ |
 
 ---
 
-## 🌱 Features Más Importantes
+## Features Más Importantes
 
 El modelo identifica que las siguientes características son las más determinantes:
 
-1. **Precipitación (24.5%)** - Factor MÁS importante
-   - Separa cultivos Kharif (monsoon) vs Rabi (secano)
-   - Determina necesidad de riego
+### 1. Precipitación (24.5%) - Factor MÁS importante
+- Separa cultivos Kharif (monsoon) vs Rabi (secano)
+- Determina necesidad de riego
+- Mayor poder discriminante del modelo
 
-2. **Nitrógeno (18.2%)**
-   - Alto N: Cotton, Maize
-   - Bajo N: Leguminosas (fijan N₂ atmosférico)
+### 2. Nitrógeno (18.2%)
+- Alto N: Cotton, Maize (cultivos de alta demanda)
+- Bajo N: Leguminosas (fijan N₂ atmosférico)
+- Esencial para crecimiento vegetativo
 
-3. **Potasio (15.6%)**
-   - Esencial para resistencia a enfermedades
-   - Calidad de frutos
+### 3. Potasio (15.6%)
+- Fundamental para resistencia a enfermedades
+- Calidad de frutos y productos finales
+- Estrés hídrico y ambiental
 
-4. **Fósforo (13.8%)**
-   - Crítico para desarrollo radicular
-   - Floración y fructificación
+### 4. Fósforo (13.8%)
+- Crítico para desarrollo radicular
+- Floración y fructificación
+- Transferencia de energía (ATP)
 
-5. **Humedad (12.1%)**
-   - Correlacionada con precipitación
-   - Separa tropicales (>80%) vs áridos (<50%)
+### 5. Humedad (12.1%)
+- Correlacionada con precipitación
+- Separa tropicales (>80%) vs áridos (<50%)
+- Presión de enfermedades fúngicas
 
-6. **Temperatura (8.9%)**
-   - Distingue climas tropicales vs templados
+### 6. Temperatura (8.9%)
+- Distingue climas tropicales vs templados
+- Determina ciclo de crecimiento
+- Zonas agroclimáticas
 
-7. **pH (5.2%)**
-   - Específico para cultivos sensibles (café, frutas)
+### 7. pH (5.2%)
+- Específico para cultivos sensibles
+- Café: 4.5-5.5 (ácido)
+- Algodón: 7-8 (neutro-alcalino)
 
 ---
 
-## 📈 Aplicación Web Streamlit
+## Aplicación Web Streamlit
 
 ### Funcionalidades
 
-#### 🏠 Página Inicio
+#### Página Inicio
 - Descripción del sistema
 - Métricas principales
 - Lista de 22 cultivos disponibles
 - Guía de uso
 
-#### 📊 Página EDA
+#### Página EDA
 - **Dataset**: Vista general, estadísticas descriptivas
 - **Distribuciones**: Histogramas, boxplots, violin plots
 - **Correlaciones**: Matriz de correlación interactiva
 - **Perfiles**: Análisis por cultivo con radar charts
 
-#### 🤖 Página Modelo
+#### Página Modelo
 - **Comparación**: SVM vs Random Forest vs XGBoost
 - **Performance**: Métricas detalladas, feature importance
 - **Documentación**: Pipeline, archivos del modelo
 
-#### 🔮 Página Predicción
+#### Página Predicción
 - **Inputs**: 7 sliders para características del terreno
 - **Resultado**: Cultivo recomendado con confianza
 - **Top-5**: Probabilidades de cultivos alternativos
@@ -116,24 +125,24 @@ El modelo identifica que las siguientes características son las más determinan
 
 ### Diseño Visual
 
-✨ **CSS Personalizado**:
-- Fuente Google Fonts (Poppins)
-- Gradientes verdes (#2ecc71, #27ae60)
+**Características de diseño:**
+- Fuente profesional: Inter (sans-serif)
+- Esquema de colores: Azules corporativos (#1e3a8a, #3b82f6)
 - Tarjetas con hover effects
-- Iconos de cultivos (emojis)
+- Visualizaciones Plotly interactivas
 - Tabs mejorados
 - Botones estilizados
 
 ---
 
-## 🗓️ Conocimiento Agronómico Integrado
+## Conocimiento Agronómico Integrado
 
 ### Estacionalidad en India
 
 | Temporada | Meses | Características | Cultivos |
 |-----------|-------|-----------------|----------|
 | **Kharif** (Monsoon) | Jun-Oct | Alta precipitación (300-1000mm) | Rice, Maize, Cotton, Jute |
-| **Rabi** (Invierno) | Nov-Mar | Baja precipitación (50-200mm) | Chickpea, Lentil, Kidneybeans |
+| **Rabi** (Invierno) | Nov-Mar | Baja precipitación (50-200mm) | Chickpea, Lentil, Kidney Beans |
 | **Zaid** (Verano) | Mar-Jun | Muy baja, requiere riego | Watermelon, Muskmelon |
 
 ### Recomendaciones por Tipo de Cultivo
@@ -157,10 +166,10 @@ El modelo identifica que las siguientes características son las más determinan
 
 ---
 
-## 📦 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
-01_proyecto/
+01_cropRecommender/
 ├── data/
 │   └── Crop_recommendation.csv       (2,200 × 8)
 ├── models/
@@ -169,45 +178,40 @@ El modelo identifica que las siguientes características son las más determinan
 ├── notebooks/
 │   ├── eda.ipynb                     (Análisis inicial)
 │   ├── eda_full.ipynb                (EDA completo)
-│   └── model_training.ipynb          (Comparación de modelos) ⭐
+│   └── model_training.ipynb          (Comparación de modelos)
 ├── reports/
-│   ├── EDA.md                        (15 secciones, ~800 líneas) ⭐
-│   └── MODEL.md                      (16 secciones)
+│   ├── EDA.md                        (Análisis exploratorio detallado)
+│   └── MODEL.md                      (Documentación del modelo)
 ├── functions/
 │   └── func_util.py                  (Utilidades ML)
 ├── streamlit/
-├── venv/                             (Ambiente virtual) ⭐
-├── app.py                            (Aplicación Streamlit) ⭐
-├── requirements.txt                  (Dependencias) ⭐
-├── run.sh                            (Script de ejecución)
-├── .gitignore
-├── QUICKSTART.md
-├── CAMBIOS.md
-├── CAMBIOS_FINAL.md                  ⭐
-└── RESUMEN_EJECUTIVO.md              ⭐
+│   └── app.py                        (Aplicación web)
+├── requirements.txt                  (Dependencias)
+├── README.md                         (Documentación principal)
+└── RESUMEN_EJECUTIVO.md             (Este documento)
 ```
-
-⭐ = Modificado/creado en Versión 2.0
 
 ---
 
-## 🚀 Cómo Ejecutar
+## Cómo Ejecutar
 
 ### 1. Activar Ambiente Virtual
 
 ```bash
-source venv/bin/activate
+source venv/bin/activate  # Linux/Mac
+# venv\Scripts\activate   # Windows
 ```
 
 ### 2. Ejecutar Streamlit
 
 ```bash
+cd streamlit
 streamlit run app.py
 ```
 
 Acceder a: `http://localhost:8501`
 
-### 3. Ejecutar Notebook de Modelos
+### 3. Ejecutar Notebook de Modelos (Opcional)
 
 ```bash
 jupyter notebook notebooks/model_training.ipynb
@@ -215,7 +219,7 @@ jupyter notebook notebooks/model_training.ipynb
 
 ---
 
-## 📊 Casos de Uso
+## Casos de Uso
 
 ### Ejemplo 1: Cultivo de Arroz
 
@@ -226,12 +230,12 @@ jupyter notebook notebooks/model_training.ipynb
 - pH: 6.2
 - Precipitación: 250mm
 
-**Output**: 🌾 **Rice** (Confianza: 97.3%)
+**Output**: **Rice** (Confianza: 97.3%)
 
 **Justificación**:
-- Alta precipitación (>200mm) ✅
-- Alta humedad (>80%) ✅
-- N alto, clima tropical ✅
+- Alta precipitación (>200mm)
+- Alta humedad (>80%)
+- N alto, clima tropical
 
 ### Ejemplo 2: Cultivo de Leguminosas
 
@@ -242,57 +246,57 @@ jupyter notebook notebooks/model_training.ipynb
 - pH: 7.0
 - Precipitación: 50mm
 
-**Output**: 🫘 **Chickpea** (Confianza: 94.8%)
+**Output**: **Chickpea** (Confianza: 94.8%)
 
 **Justificación**:
-- N bajo (leguminosa) ✅
-- P alto (nodulación) ✅
-- Secano (Rabi) ✅
-- pH neutro ✅
+- N bajo (leguminosa)
+- P alto (nodulación)
+- Secano (Rabi)
+- pH neutro
 
 ---
 
-## 💡 Impacto Esperado
+## Impacto Esperado
 
 ### Para Agricultores
 
-✅ **Reducción de riesgo**: 99% de confianza en recomendaciones  
-✅ **Ahorro de costos**: Evitar cultivos no aptos para el terreno  
-✅ **Mayor productividad**: Cultivo óptimo = mejor rendimiento  
-✅ **Sostenibilidad**: Uso eficiente de agua y fertilizantes  
+- **Reducción de riesgo**: 99% de confianza en recomendaciones  
+- **Ahorro de costos**: Evitar cultivos no aptos para el terreno  
+- **Mayor productividad**: Cultivo óptimo = mejor rendimiento  
+- **Sostenibilidad**: Uso eficiente de agua y fertilizantes  
 
 ### Para el Sector Agrícola
 
-✅ **Precisión**: Agricultura basada en datos  
-✅ **Escalabilidad**: Sistema replicable en diferentes regiones  
-✅ **Integración IoT**: Sensores de suelo + ML  
-✅ **Planificación**: Predicción de demanda por cultivo  
+- **Precisión**: Agricultura basada en datos  
+- **Escalabilidad**: Sistema replicable en diferentes regiones  
+- **Integración IoT**: Sensores de suelo + ML  
+- **Planificación**: Predicción de demanda por cultivo  
 
 ---
 
-## 🔮 Mejoras Futuras
+## Mejoras Futuras
 
 ### Corto Plazo (1-3 meses)
-- [ ] Validación con datos de campo reales
-- [ ] Integración con sensores IoT
-- [ ] App móvil (Flutter/React Native)
-- [ ] Sistema de alertas por SMS/WhatsApp
+- Validación con datos de campo reales
+- Integración con sensores IoT
+- App móvil (Flutter/React Native)
+- Sistema de alertas por SMS/WhatsApp
 
 ### Medio Plazo (3-6 meses)
-- [ ] Features temporales (fecha de siembra)
-- [ ] Optimización multi-objetivo (rendimiento + costo + sostenibilidad)
-- [ ] API REST para integración con otros sistemas
-- [ ] Dashboard de monitoreo para múltiples fincas
+- Features temporales (fecha de siembra)
+- Optimización multi-objetivo (rendimiento + costo + sostenibilidad)
+- API REST para integración con otros sistemas
+- Dashboard de monitoreo para múltiples fincas
 
 ### Largo Plazo (6-12 meses)
-- [ ] Deep Learning para imágenes satelitales
-- [ ] Series temporales con datos climáticos históricos
-- [ ] Expansión geográfica (otros países/regiones)
-- [ ] Marketplace de recomendaciones + insumos agrícolas
+- Deep Learning para imágenes satelitales
+- Series temporales con datos climáticos históricos
+- Expansión geográfica (otros países/regiones)
+- Marketplace de recomendaciones + insumos agrícolas
 
 ---
 
-## 📚 Referencias Técnicas
+## Referencias Técnicas
 
 ### Bibliotecas Utilizadas
 
@@ -313,28 +317,30 @@ jupyter notebook notebooks/model_training.ipynb
 
 ---
 
-## ✅ Estado del Proyecto
+## Estado del Proyecto
 
-**Versión Actual**: 2.0  
-**Estado**: ✅ **COMPLETADO Y FUNCIONAL**  
-**Fecha**: Octubre 2025  
+**Versión Actual**: 2.0 Professional  
+**Estado**: Completado y Funcional  
+**Fecha**: Febrero 2026  
 
 **Tareas Completadas**:
-- [x] Ambiente virtual con Python 3.12
-- [x] Comparación de 3 modelos (SVM, RF, XGBoost)
-- [x] Recomendaciones agronómicas integradas
-- [x] Análisis de estacionalidad Kharif/Rabi/Zaid
-- [x] Diseño visual profesional en Streamlit
-- [x] Documentación completa (EDA.md, MODEL.md)
+- Comparación de 3 modelos (SVM, RF, XGBoost)
+- Recomendaciones agronómicas integradas
+- Análisis de estacionalidad Kharif/Rabi/Zaid
+- Diseño visual profesional en Streamlit
+- Documentación completa (EDA.md, MODEL.md)
+- Eliminación de elementos no profesionales
 
 **Sistema Listo Para**:
-- ✅ Demostración en vivo
-- ✅ Presentación a stakeholders
-- ✅ Validación de campo
-- ✅ Despliegue en producción (con ajustes regionales)
+- Demostración en vivo
+- Presentación a stakeholders
+- Validación de campo
+- Despliegue en producción (con ajustes regionales)
+- Inclusión en portafolio profesional
 
 ---
 
-**🌾 Sistema de Recomendación de Cultivos**  
+**Sistema de Recomendación de Cultivos**  
 *Agricultura de Precisión | Powered by Machine Learning & Random Forest*  
-*Versión 2.0 | 2025*
+*Versión 2.0 Professional | 2026*  
+*Desarrollado por Christian Rueda-Ayala*
